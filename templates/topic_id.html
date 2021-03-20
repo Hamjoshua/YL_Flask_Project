@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  
+  <div class="border border-dark bg-dark text-white">
+    {% for subtopic in subtopics %}
+    {% set mess = messages[loop.index - 1] %}
+    <p><a href='/subtopic/{{ subtopic.id }}'>{{ subtopic.title }}, {{ mess.time }}, {{ mess.user.name }}</a></p>
+    <p>{{ mess.message }}</p>
+    {% endfor %}
+  </div>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for mess in messages %}
+  <div class="message">
+    {% set mess = messages[loop.index - 1] %}
+    <p>{{ mess.user.name }}, {{ mess.time }}</p>
+    <p class="message_content">{{ mess.message }}</p>
+  </div>
+{% endfor %}
+
+
+<div class="message">
+  <form method="post" action="">
+  {{ form.hidden_tag() }}
+  <p>{{ current_user.name }}</p>
+  <p>{{ form.message.label }}
+     {{ form.message(class='form-control', type='textarea') }}
+     {% for error in form.message.errors %}
+        <div role="alert" class="alert alert-danger">
+        {{ error }}
+        </div>
+     {% endfor %}
+  </p>
+  <p>{{ form.submit(class='btn btn-primary') }}</p>
+  </form>
+</div>
+
+
+
+
+{% endblock %}
