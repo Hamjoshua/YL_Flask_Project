@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="46094b63-d38f-4935-801f-4c36d4f600cd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/forms/catform.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forms/depform.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forms/jobform.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forms/loginform.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forms/userform.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/role.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/role.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/topic_id.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/topic_id.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.txt" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1ptG4U92jaPQAUDTV3tNw5E2Xeb" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PyPaint_Yandex.Lyceum-PyQT5" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\User\Documents\GitHub\YL_Flask_Project\forms" />
+      <recent name="C:\Users\User\Documents\GitHub\YL_Flask_Project" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="YL_Flask_Project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="46094b63-d38f-4935-801f-4c36d4f600cd" name="Default Changelist" comment="" />
+      <created>1615994781559</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1615994781559</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2106" y="110" key="FileChooserDialogImpl" timestamp="1616256752804">
+      <screen x="1366" y="-165" width="1920" height="1040" />
+    </state>
+    <state x="2106" y="110" key="FileChooserDialogImpl/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616256752804" />
+    <state width="970" height="235" key="GridCell.Tab.0.bottom" timestamp="1616254304828">
+      <screen x="1366" y="-165" width="1920" height="1040" />
+    </state>
+    <state width="970" height="235" key="GridCell.Tab.0.bottom/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616254304828" />
+    <state width="970" height="235" key="GridCell.Tab.0.center" timestamp="1616254304827">
+      <screen x="1366" y="-165" width="1920" height="1040" />
+    </state>
+    <state width="970" height="235" key="GridCell.Tab.0.center/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616254304827" />
+    <state width="970" height="235" key="GridCell.Tab.0.left" timestamp="1616254304827">
+      <screen x="1366" y="-165" width="1920" height="1040" />
+    </state>
+    <state width="970" height="235" key="GridCell.Tab.0.left/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616254304827" />
+    <state width="970" height="235" key="GridCell.Tab.0.right" timestamp="1616254304828">
+      <screen x="1366" y="-165" width="1920" height="1040" />
+    </state>
+    <state width="970" height="235" key="GridCell.Tab.0.right/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616254304828" />
+  </component>
+</project>

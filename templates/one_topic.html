@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 style="text-align: center;">{{title}}</h1>
+  <a href="/add_subtopic/{{ topic_id }}" class="btn btn-secondary" style="margin-left: 5%;">Add Subtopic</a>
+  <ul>
+    {% for subtopic in subtopics %}
+    <li>
+      <div class="sidenav">
+        <p>{{ subtopic.title }}
+          {% if current_user.is_authenticated and (current_user.id == subtopic.author_id) %}
+          <a href="/subtopic_edit/{{ subtopic.id }}" class="btn btn-outline-info">edit</a>
+          <a href="/subtopic_delete/{{ subtopic.id }}" class="btn btn-outline-danger">delete</a>
+          {% endif %}
+        </p>
+      </div>
+    </li>
+    {% if dict_messages[subtopic.id] %}
+    <p style="margin-left: 1%;">Comments:</p>
+    {% endif %}
+    {% for message in dict_messages[subtopic.id] %}
+    <div class="col-md6 border rounded">
+      <p>
+        Author: {{ message.author_id }} - {{ message.time }}
+        {% if current_user.is_authenticated and (current_user.id == subtopic.author_id) %}
+        <a href="/message_edit/{{ message.id }}" class="btn btn-outline-info">edit</a>
+        <a href="/message_delete/{{ message.id }}" class="btn btn-outline-danger">delete</a>
+        {% endif %}
+      </p>
+      <p>{{ message.message }}</p>
+    </div>
+    {% endfor %}
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.message.label }}<br>
+            {{ form.message(class="form-control") }}<br>
+            {% for error in form.message.errors %}
+                <p class="alert alert-danger" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+            <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        </p>
+    </form>
+    {% endfor %}
+  </ul>
+  {{message}}
+{% endblock %}

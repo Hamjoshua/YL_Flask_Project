@@ -1,11 +1,10 @@
-from .db_session import SqlAlchemyBase
+import sqlalchemy
 from sqlalchemy_serializer import SerializerMixin
 
-import sqlalchemy
+from .db_session import SqlAlchemyBase
 
 
 class Role(SqlAlchemyBase, SerializerMixin):
     __tablename__ = 'roles'
-
     id = sqlalchemy.Column(sqlalchemy.Integer, autoincrement=True, primary_key=True, nullable=False)
-    role = sqlalchemy.Column(sqlalchemy.String)  # будет три роли: "usual", "admin", "banned"
+    role = sqlalchemy.Column(sqlalchemy.String, nullable=False, unique=False)
