@@ -13,7 +13,7 @@ def abort_if_users_not_found(users_id):
         abort(404, message=f"users {users_id} not found")
 
 
-class UsersResource(Resource):
+class UserResource(Resource):
     def get(self, users_id):
         abort_if_users_not_found(users_id)
         session = db_session.create_session()

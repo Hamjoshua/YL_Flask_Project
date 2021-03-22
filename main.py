@@ -12,6 +12,10 @@ from forms.loginform import LoginForm
 from forms.topicform import TopicForm
 from forms.subtopicform import SubtopicForm
 from forms.messageform import MessageForm
+from api.message_resources import *
+from api.subtopic_resources import *
+from api.topic_resources import *
+from api.user_resources import *
 
 ROLES = ["usual", "admin", "banned"]
 
@@ -304,6 +308,19 @@ def one_subtopic(subtopic_id):
 
 def main():
     db_session.global_init('db/forum.db')
+
+    api.add_resource(message_resources.MessageResource, '/api/messages/<int:messages_id>')
+    api.add_resource(message_resources.MessageListResource, '/api/messages')
+    
+    api.add_resource(subtopic_resources.SubtopicResource, '/api/subtopics/<int:subtopics_id>')
+    api.add_resource(subtopic_resources.SubtopicListResource, '/api/subtopics')
+    
+    api.add_resource(topic_resources.TopicResource, '/api/topics/<int:topics_id>')
+    api.add_resource(topic_resources.TopicListResource, '/api/topics')
+    
+    api.add_resource(user_resources.UserResource, '/api/users/<int:users_id>')
+    api.add_resource(user_resources.UserListResource, '/api/users')
+
     app.run(port=8000, host='127.0.0.1')
 
 
