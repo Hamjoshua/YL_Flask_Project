@@ -5,4 +5,4 @@ from wtforms.validators import DataRequired
 
 class MessageForm(FlaskForm):
     message = TextAreaField('', validators=[DataRequired()])
-    submit = SubmitField('Отправить')
+    submit = SubmitField('Готово')

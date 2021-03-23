@@ -1,26 +1,34 @@
+import os
 import datetime
+from csv import reader
 from requests import get
 
-from flask import Flask, request, render_template, redirect, abort, url_for
+from flask import Flask, request, render_template, redirect, abort, session, url_for
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask_restful import reqparse, abort, Api, Resource
+from werkzeug.utils import secure_filename
 
 from data import db_session
 from data.__all_models import *
+from forms.userform import UserForm
 from forms.registerform import RegisterForm
 from forms.loginform import LoginForm
 from forms.topicform import TopicForm
-from forms.subtopicform import SubtopicForm
 from forms.messageform import MessageForm
-from api.message_resources import *
-from api.subtopic_resources import *
-from api.topic_resources import *
-from api.user_resources import *
+from forms.searchtopicform import SearchTopicForm
+from api import user_api
+# from api import message_resources, subtopic_resources, \
+#     topic_resources, user_resources
 
-ROLES = ["usual", "admin", "banned"]
+ROLES = ["user", "admin", "banned"]
+MAX_TOPIC_SHOW = 20
+
+TOPIC_IMG_DIR = 'static/img/topic_img'
+PROFILE_IMG_DIR = 'static/img/profile_img'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'I2D4423D2Q53D'
+app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(days=365)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -49,6 +57,10 @@ def logout():
 @app.route('/')
 @app.route('/index')
 def index():
+    visits_count = session.get('visits_count', 0)
+    session['visits_count'] = visits_count + 1
+    if not visits_count:
+        print('Вы пришли на эту страницу в первый раз за последние 2 года')
     return render_template('index.html', title='Главная')
 
 
@@ -61,13 +73,15 @@ def register():
                 'register.html', title='Регистрация', form=form,
                 message="Пароли не совпадают")
         db_sess = db_session.create_session()
-        if db_sess.query(User).filter(User.name == form.name.data).first():
+        if db_sess.query(User).filter(User.email == form.email.data).first():
             return render_template(
                 'register.html', title='Регистрация', form=form,
-                message="Такой пользователь уже есть")
+                message="Такой email уже есть")
         user = User()
         user.name = form.name.data
+        user.email = form.email.data
         user.set_password(form.password.data)
+        user.about = form.about.data
         db_sess.add(user)
         db_sess.commit()
         return redirect('/login')
@@ -79,7 +93,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
-        user = db_sess.query(User).filter(User.name == form.name.data).first()
+        user = db_sess.query(User).filter(User.email == form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)  # значение галочки
             return redirect("/")
@@ -88,32 +102,124 @@ def login():
     return render_template('login.html', title='Авторизация', form=form)
 
 
-@app.route("/topics")
-def all_topics():
+@app.route('/profile/<int:user_id>')
+def profile(user_id):
     db_sess = db_session.create_session()
-    if current_user.is_authenticated:
-        topics = db_sess.query(Topic).all()
-        return render_template("topics.html", topics=topics)
-    return redirect("/login")
+    user = db_sess.query(User).filter(User.id == user_id).first()
+    return render_template('user_profile.html', title='Профиль:', user=user)
 
 
-@app.route('/topic/<int:topic_id>')
+@app.route('/edit_profile/<int:user_id>', methods=['GET', 'POST'])
+def edit_profile(user_id):
+    form = UserForm()
+    db_sess = db_session.create_session()
+    user = db_sess.query(User).filter(User.id == user_id).first()
+    if request.method == "GET":
+        form.area.data = user.area
+        form.about.data = user.about
+        return render_template('user_edit.html', form=form, user=user)
+    else:
+
+        added_img = form.profile_img.data
+        if added_img:
+            f = added_img
+            filename = f'{PROFILE_IMG_DIR}/{f.filename}'
+            f.save(filename)
+            user.profile_img = filename
+        else:
+            user.profile_img = ''
+
+        user.area = form.area.data
+        user.about = form.about.data
+        db_sess.add(user)
+        db_sess.commit()
+        return redirect(f'/profile/{user.id}')
+
+
+@app.route('/show_map/<int:user_id>')
+def show_map(user_id):
+    param = get(f'http://localhost:8000/api/users_param/{user_id}').json()
+    return render_template('show_user_area.html', **param)
+
+
+@app.route("/categories")
+def all_categories():
+    db_sess = db_session.create_session()
+    categories = list(db_sess.query(Category).all())
+    # divide by 4 columns
+    four_category_lists = \
+        [categories[len(categories) // 4 * i:len(categories) // 4 * (i + 1)]
+         for i in range(4)]
+    return render_template(
+        "categories.html",
+        four_category_lists=four_category_lists)
+
+
+@app.route("/topics/<int:category_id>", methods=['GET', 'POST'])
+def all_topics(category_id):
+    form = SearchTopicForm()
+    db_sess = db_session.create_session()
+    if form.search.data is None:
+        search_request = ''
+    else:
+        search_request = form.search.data
+        category_id = int(form.category.data)
+    form.category.process_data(category_id)
+
+    if not category_id:
+        topics = db_sess.query(Topic).filter(
+            Topic.title.like(f'%{search_request}%'))
+    else:
+        topics = db_sess.query(Topic).filter(
+            Topic.category_id == category_id,
+            Topic.title.like(f'%{search_request}%'))
+
+    topic_data = dict()
+    for topic in topics:
+        user = db_sess.query(User).filter(
+            User.id == topic.author_id).first()
+        category = db_sess.query(Category).filter(
+            Category.id == topic.category_id).first()
+        topic_data[topic] = dict()
+        topic_data[topic]['user'] = user
+        topic_data[topic]['category'] = category
+        topic_data[topic]['len_message'] = \
+            len(list(db_sess.query(Message).filter(
+                Message.topic_id == topic.id)))
+    return render_template(
+        "topics.html", topics=topics, form=form,
+        topic_data=topic_data)
+
+
+@app.route('/topic/<int:topic_id>', methods=['GET', 'POST'])
 def one_topic(topic_id):
     message_form = MessageForm()
-    param = dict()
     db_sess = db_session.create_session()
-    param['title'] = (db_sess.query(Topic).get(topic_id)).title
-    param['topic_id'] = topic_id
-    param['subtopics'] = db_sess.query(Subtopic).filter(
-        Subtopic.topic_id == topic_id)
-    dict_messages = dict()
-    for st in param['subtopics']:
-        dict_messages[st.id] = list((
-            db_sess.query(Message).filter(
-                Message.subtopic_id == st.id)))
-    param['dict_messages'] = dict_messages
-    return render_template('one_topic.html', **param,
-                           form=message_form)
+    topic = db_sess.query(Topic).get(topic_id)
+    user = db_sess.query(User).get(topic.author_id)
+
+    if request.method == 'POST':
+        message = Message()
+        message.message = message_form.message.data
+        message.topic_id = topic.id
+        message.author_id = current_user.id
+        db_sess.add(message)
+        db_sess.commit()
+        return redirect(f'/topic/{topic_id}')
+
+    list_messages = list(db_sess.query(Message).filter(
+        Message.topic_id == topic.id))
+    messages_authors_dict = dict()
+    for message in list_messages:
+        messages_authors_dict[message] = \
+            db_sess.query(User).filter(
+                User.id == message.author_id).first()
+
+    return render_template(
+        'one_topic.html', topic=topic, user=user,
+        messages_authors_dict=messages_authors_dict,
+        messages=list_messages,
+        form=message_form)
 
 
 @app.route('/add_topic',  methods=['GET', 'POST'])
@@ -126,15 +232,29 @@ def add_topics():
             return render_template(
                 'topic_add.html', form=form,
                 message="Такой топик уже есть")
+
         topic = Topic()
         topic.title = form.title.data
+        topic.text = form.text.data
+
+        added_img = form.img.data
+        if added_img:
+            f = added_img
+            filename = f'{TOPIC_IMG_DIR}/{f.filename}'
+            f.save(filename)
+            topic.img = filename
+        else:
+            topic.img = ''
+
+        topic.category_id = form.category.data
         topic.author_id = current_user.id
         db_sess.add(topic)
         db_sess.commit()
-        return redirect('/topics')
+        return redirect(f'/topics/{form.category.data}')
     return render_template('topic_add.html', form=form)
 
 
+'''
 @app.route('/topic_edit/<int:topic_id>', methods=['GET', 'POST'])
 @login_required
 def edit_topics(topic_id):
@@ -172,70 +292,7 @@ def topics_delete(topic_id):
     else:
         abort(404)
     return redirect('/topics')
-
-
-@app.route('/add_subtopic/<int:topic_id>',  methods=['GET', 'POST'])
-@login_required
-def add_subtopics(topic_id):
-    form = SubtopicForm()
-    if form.validate_on_submit():
-        db_sess = db_session.create_session()
-        if db_sess.query(Subtopic).filter(
-                Subtopic.title == form.title.data).first():
-            return render_template(
-                'subtopic_add.html', form=form,
-                message="Такой субтопик уже есть")
-        topic = Subtopic()
-        topic.title = form.title.data
-        topic.author_id = int(current_user.id)
-        topic.topic_id = int(topic_id)
-        db_sess.add(topic)
-        db_sess.commit()
-        return redirect(f'/topic/{topic_id}')
-    db_sess = db_session.create_session()
-    return render_template(
-        'subtopic_add.html', form=form,
-        theme=db_sess.query(Topic).get(topic_id).title)
-
-
-@app.route('/subtopic_edit/<int:subtopic_id>', methods=['GET', 'POST'])
-@login_required
-def edit_subtopics(subtopic_id):
-    form = SubtopicForm()
-    db_sess = db_session.create_session()
-    subtopic = db_sess.query(Subtopic).filter(
-        Subtopic.id == subtopic_id).first()
-    if request.method == "GET":
-        if subtopic:
-            form.title.data = subtopic.title
-        else:
-            abort(404)
-    if form.validate_on_submit():
-        if subtopic:
-            subtopic.title = form.title.data
-            db_sess.add(subtopic)
-            db_sess.commit()
-            return redirect(f'/topic/{subtopic.topic_id}')
-        else:
-            abort(404)
-    return render_template(
-        'subtopic_add.html', form=form,
-        theme=db_sess.query(Topic).get(subtopic.topic_id).title)
-
-
-@app.route('/subtopic_delete/<int:subtopic_id>', methods=['GET', 'POST'])
-@login_required
-def subtopics_delete(subtopic_id):
-    db_sess = db_session.create_session()
-    subtopic = db_sess.query(Subtopic).filter(
-        Subtopic.id == subtopic_id).first()
-    if subtopic:
-        topic_id = subtopic.topic_id
-        db_sess.delete(subtopic)
-        db_sess.commit()
-        return redirect(f'/topic/{topic_id}')
-    else:
-        abort(404)
+'''
 
 
 @app.route('/message_edit/<int:message_id>', methods=['GET', 'POST'])
@@ -255,17 +312,15 @@ def edit_message(message_id):
             message.message = form.message.data
             db_sess.add(message)
             db_sess.commit()
-            topic_id = db_sess.query(Topic).get(
-                db_sess.query(Subtopic).get(
-                    message.subtopic_id).topic_id).id
+            topic_id = message.topic_id
             return redirect(f'/topic/{topic_id}')
         else:
             abort(404)
     return render_template(
         'message_edit.html', form=form,
-        theme=db_sess.query(Topic).get(
-            db_sess.query(Subtopic).get(
-                message.subtopic_id).topic_id).title)
+        message=message,
+        topic=db_sess.query(Topic).get(
+            message.topic_id))
 
 
 @app.route('/message_delete/<int:message_id>', methods=['GET', 'POST'])
@@ -275,9 +330,7 @@ def message_delete(message_id):
     message = db_sess.query(Message).filter(
         Message.id == message_id).first()
     if message:
-        topic_id = db_sess.query(Topic).get(
-            db_sess.query(Subtopic).get(
-                message.subtopic_id).topic_id).id
+        topic_id = message.topic_id
         db_sess.delete(message)
         db_sess.commit()
         return redirect(f'/topic/{topic_id}')
@@ -285,30 +338,36 @@ def message_delete(message_id):
         abort(404)
 
 
-@app.route('/subtopic/<int:subtopic_id>', methods=['GET', 'POST'])
-def one_subtopic(subtopic_id):
-    form = MessageForm()
-
+def init_category_table():
     db_sess = db_session.create_session()
-    if form.validate_on_submit():
-        new_msg = Message(
-            message=form.data['message'],
-            subtopic_id=subtopic_id,
-            author_id=current_user.id
-        )
-        db_sess.add(new_msg)
-        db_sess.commit()
+    with open("static/categories.csv", mode='rt', encoding='utf-8') as csv_file:
+        csv_file = [elem[0] for elem in reader(csv_file, delimiter=';')]
+    for category_name in csv_file:
+        category = db_sess.query(Category).filter(
+            Category.title == category_name).first()
+        if not category:
+            category = Category()
+            category.title = category_name
+            db_sess.add(category)
+            db_sess.commit()
 
-    messages = db_sess.query(Message).all()
-    subtopic_title = messages[0].subtopic.title
 
-    return render_template('subtopic_id.html', title=subtopic_title, topics=get_topics(),
-                           messages=messages, form=form)
+def init_role_table():
+    db_sess = db_session.create_session()
+    for role_name in ROLES:
+        role = db_sess.query(Role).filter(Role.role == role_name).first()
+        if not role:
+            role = Role()
+            role.role = role_name
+            db_sess.add(role)
+            db_sess.commit()
 
 
 def main():
     db_session.global_init('db/forum.db')
-
+    init_role_table()
+    init_category_table()
+    '''
     api.add_resource(message_resources.MessageResource, '/api/messages/<int:messages_id>')
     api.add_resource(message_resources.MessageListResource, '/api/messages')
     
@@ -320,7 +379,8 @@ def main():
     
     api.add_resource(user_resources.UserResource, '/api/users/<int:users_id>')
     api.add_resource(user_resources.UserListResource, '/api/users')
-
+    '''
+    app.register_blueprint(user_api.blueprint)
     app.run(port=8000, host='127.0.0.1')
 
 

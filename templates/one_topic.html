@@ -1,49 +1,127 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1 style="text-align: center;">{{title}}</h1>
-  <a href="/add_subtopic/{{ topic_id }}" class="btn btn-secondary" style="margin-left: 5%;">Add Subtopic</a>
-  <ul>
-    {% for subtopic in subtopics %}
-    <li>
-      <div class="sidenav">
-        <p>{{ subtopic.title }}
-          {% if current_user.is_authenticated and (current_user.id == subtopic.author_id) %}
-          <a href="/subtopic_edit/{{ subtopic.id }}" class="btn btn-outline-info">edit</a>
-          <a href="/subtopic_delete/{{ subtopic.id }}" class="btn btn-outline-danger">delete</a>
-          {% endif %}
-        </p>
-      </div>
-    </li>
-    {% if dict_messages[subtopic.id] %}
-    <p style="margin-left: 1%;">Comments:</p>
-    {% endif %}
-    {% for message in dict_messages[subtopic.id] %}
-    <div class="col-md6 border rounded">
-      <p>
-        Author: {{ message.author_id }} - {{ message.time }}
-        {% if current_user.is_authenticated and (current_user.id == subtopic.author_id) %}
-        <a href="/message_edit/{{ message.id }}" class="btn btn-outline-info">edit</a>
-        <a href="/message_delete/{{ message.id }}" class="btn btn-outline-danger">delete</a>
-        {% endif %}
-      </p>
-      <p>{{ message.message }}</p>
-    </div>
-    {% endfor %}
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.message.label }}<br>
-            {{ form.message(class="form-control") }}<br>
-            {% for error in form.message.errors %}
-                <p class="alert alert-danger" role="alert">
-                    {{ error }}
-                </p>
+    <div style="margin: 10%;margin-top: 1%;padding: 20px;font-size: 14px;background-color: #F7F8FA;border: 1px solid #DBDCDD;border-radius: 0 0 6px 6px;">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <h2 style="text-align: center;">Тема: {{ topic.title }}</h2>
+            </li>
+            <li class="list-group-item">
+                <div style="font-size: 17px;line-height: 24px;font-weight: 400;font-family: Helvetica,Arial,sans-serif;color: #333;word-break: break-word;">
+                <div>
+                    Автор темы:
+                    {% if user.profile_img %}
+                    <img src="/{{ user.profile_img }}" width="28" height="28" style="border-radius: 500px;">
+                    {% else %}
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxmwWDfc034Ea1LFCRRg__dQtvJQBpkRAKgA&usqp=CAU" width="48" height="48" style="border-radius: 500px;">
+                    {% endif %}
+                    <a href="/profile/{{ user.id }}" style="color: #333;font-weight: 700;overflow-wrap: break-word;">{{ user.name }}</a>
+                </div>
+                Создана: {{ topic.date }}
+            </div><br>
+            </li>
+            <li class="list-group-item">
+                <div>
+                {{ topic.text }}
+            </div>
+            </li>
+            <li class="list-group-item">
+                {% if user.profile_img %}
+                <div>
+                    <div class="accordion" id="accordionFlushExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                    Показать картинку темы
+                                </button>
+                            </h2>
+                            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <h5 style="text-align: center;">Картинка темы:</h5>
+                                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <img src="/{{ topic.img }}" class="d-block w-100" alt="Пользователь не прикрепил картинку к теме :(" width="500" style="border-radius: 100px;display: block;margin-left: auto;margin-right: auto;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+            {% endif %}
+            </li>
+        </ul><br>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <h4 style="text-align: center;">Комментарии: {{ messages|length }}</h4>
+            </li>
+            {% for message in messages %}
+            <li class="list-group-item">
+                <div style="font-size: 17px;line-height: 24px;font-weight: 400;font-family: Helvetica,Arial,sans-serif;color: #333;word-break: break-word;">
+                    <div>
+                        Автор комментария:
+                        {% if messages_authors_dict[message].profile_img %}
+                        <img src="/{{ messages_authors_dict[message].profile_img }}" width="28" height="28" style="border-radius: 500px;">
+                        {% else %}
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxmwWDfc034Ea1LFCRRg__dQtvJQBpkRAKgA&usqp=CAU" width="28" height="28" style="border-radius: 500px;">
+                        {% endif %}
+                        <a href="/profile/{{ messages_authors_dict[message].id }}" style="color: #333;font-weight: 700;overflow-wrap: break-word;">{{ messages_authors_dict[message].name }}</a>
+                         - {{ message.time }}
+
+                        {% if current_user.is_authenticated and (current_user.id == messages_authors_dict[message].id) %}
+                            <a href="/message_edit/{{ message.id }}" type="button" class="btn btn-outline-success btn-sm">Изменить</a>
+                            <a href="/message_delete/{{ message.id }}" type="button" class="btn btn-outline-danger btn-sm">Удалить</a>
+                        {% endif %}
+
+                    </div>
+                </div>
+                {{ message.message }}
+            </li>
             {% endfor %}
-            <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
-        </p>
-    </form>
-    {% endfor %}
-  </ul>
-  {{message}}
+        </ul><br>
+        {% if current_user.is_authenticated %}
+        <ul class="list-group">
+            <li class="list-group-item">
+                <form action="" method="post">
+                    {{ form.hidden_tag() }}
+                    <p>
+                        <h4 style="text-align: center;">Написать комментарий:</h4>
+                        {{ form.message(class="form-control", type="password") }}
+                        {% for error in form.message.errors %}
+                            <p class="alert alert-danger" role="alert">
+                                {{ error }}
+                            </p>
+                        {% endfor %}
+                    </p>
+                    <p>{{ form.submit(type="submit", class="btn btn-primary", style="height:50px; width: 100%;") }}</p>
+                    {{message}}
+                </form>
+            </li>
+        </ul>
+        {% endif %}
+    </div>
 {% endblock %}
+
+
+<!--
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="text-align: center;">Area: {{ city_from }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img src="{{url_img}}" alt="картинка не нашлась" width="465" style="border-radius=800px;">
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Show on map
+</button>
+-->

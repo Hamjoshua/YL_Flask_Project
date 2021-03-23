@@ -12,11 +12,11 @@ class Message(SqlAlchemyBase, SerializerMixin):
     id = sqlalchemy.Column(sqlalchemy.Integer, autoincrement=True, primary_key=True,
                            nullable=False)
     message = sqlalchemy.Column(sqlalchemy.String, nullable=False)
-    subtopic_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('subtopics.id'),
-                                    nullable=False)
+    topic_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('topics.id'),
+                                 nullable=False)
     author_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'),
                                   nullable=False)
     time = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now)
 
     user = orm.relation('User')
-    subtopic = orm.relation('Subtopic')
+    topic = orm.relation('Topic')

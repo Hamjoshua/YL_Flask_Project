@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="margin: 10%;margin-top: 1%;padding: 20px;font-size: 14px;background-color: #F7F8FA;border: 1px solid #DBDCDD;border-radius: 0 0 6px 6px;">
+    <h2 style="text-align: center;">Изменение профиля:  {{ user.name }}</h2>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <ul class="list-group">
+            <li class="list-group-item">
+                <h5>Profile image:</h5>
+                <p>
+                    {{ form.profile_img(class="form-control") }}<br>
+                    {% for error in form.profile_img.errors %}
+                        <p class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </p>
+                    {% endfor %}
+                </p>
+            </li>
+            <li class="list-group-item">
+                <h5>About:</h5>
+                <p>
+                    {{ form.about(class="form-control") }}<br>
+                    {% for error in form.about.errors %}
+                        <p class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </p>
+                    {% endfor %}
+                </p>
+            </li>
+            <li class="list-group-item">
+                <h5>Area:</h5>
+                <p>
+                    {{ form.area(class="form-control") }}<br>
+                    {% for error in form.area.errors %}
+                        <p class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </p>
+                    {% endfor %}
+                </p>
+            </li>
+        </ul>
+        {% if current_user.is_authenticated and (current_user.id == user.id) %}
+        <p>{{ form.submit(type="submit", class="btn btn-primary", style="width: 100%;") }}</p>
+        <a class="btn btn-outline-success" href="/profile/{{ current_user.id }}" style="width:100%;">
+            Cancel
+        </a>
+        {% endif %}
+        {{message}}
+    </form>
+</div>
+{% endblock %}

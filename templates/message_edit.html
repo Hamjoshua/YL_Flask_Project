@@ -1,18 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Edit message (Theme: {{ theme }})</h1>
+<div style="margin: 10%;margin-top: 1%;padding: 20px;font-size: 14px;background-color: #F7F8FA;border: 1px solid #DBDCDD;border-radius: 0 0 6px 6px;">
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
-            {{ form.message.label }}<br>
-            {{ form.message(class="form-control") }}<br>
+            <h2 style="text-align: center;">Изменение комментария ({{ topic.title }}):</h2>
+
+            Автор комментария:
+            {% if current_user.profile_img %}
+            <img src="/{{ current_user.profile_img }}" width="28" height="28" style="border-radius: 500px;">
+            {% else %}
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxmwWDfc034Ea1LFCRRg__dQtvJQBpkRAKgA&usqp=CAU" width="28" height="28" style="border-radius: 500px;">
+            {% endif %}
+            <a href="/profile/{{ current_user.id }}" style="color: #333;font-weight: 700;overflow-wrap: break-word;">{{ current_user.name }}</a>
+             - {{ message.time }}
+
+            {{ form.message(class="form-control") }}
             {% for error in form.message.errors %}
                 <p class="alert alert-danger" role="alert">
                     {{ error }}
                 </p>
             {% endfor %}
         </p>
-        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
-        {{message}}
+        <p>
+            {{ form.submit(type="submit", class="btn btn-primary") }}
+            <a href="/topic/{{ topic.id }}" type="button" class="btn btn-outline-secondary btn">Отмена</a>
+        </p>
     </form>
+</div>
 {% endblock %}

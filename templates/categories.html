@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 style="text-align: center;">Все категории проекта:</h2>
+<div class="col-md6 border rounded">
+    <ul>
+        <div class="container">
+            <div class="row">
+                {% for category_list in four_category_lists %}
+                <div class="col-sm">
+                    {% for category in category_list %}
+                    <li>
+                        <div class="sidenav">
+                            <p><a href="/topics/{{ category.id }}">
+                                {{ category.id }} - {{ category.title }}
+                            </a></p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </ul>
+</div>
+{% endblock %}

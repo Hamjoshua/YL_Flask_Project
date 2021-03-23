@@ -1,18 +1,46 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Creating a topic</h1>
-    <form action="" method="post">
+<div style="margin: 10%;margin-top: 1%;padding: 20px;font-size: 14px;background-color: #F7F8FA;border: 1px solid #DBDCDD;border-radius: 0 0 6px 6px;">
+    <h2 style="text-align: center;">Добавить тему</h2>
+    <form action="" method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <p>
             {{ form.title.label }}<br>
-            {{ form.title(class="form-control") }}<br>
+            {{ form.title(class="form-control", placeholder="Введите название темы") }}<br>
             {% for error in form.title.errors %}
                 <p class="alert alert-danger" role="alert">
                     {{ error }}
                 </p>
             {% endfor %}
         </p>
-        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        <p>
+            {{ form.text.label }}<br>
+            {{ form.text(class="form-control", placeholder="Введите текст темы") }}<br>
+            {% for error in form.text.errors %}
+                <p class="alert alert-danger" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.img.label }}<br>
+            {{ form.img(class="form-control") }}<br>
+            {% for error in form.img.errors %}
+                <p class="alert alert-danger" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.category.label }}<br>
+            {{ form.category(class="form-control") }}<br>
+            {% for error in form.category.errors %}
+                <p class="alert alert-danger" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary", style="") }}</p>
         {{message}}
     </form>
 {% endblock %}

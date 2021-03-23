@@ -1,21 +1,63 @@
 {% extends "base.html" %}
 {% block content %}
-<h1 style="text-align: center;">Topics:</h1>
-<div class="col-md6 border rounded">
-    <ul>
-        {% for topic in topics %}
-        <li>
-            <div class="sidenav">
-                <p>
-                    <a href="/topic/{{ topic.id }}">{{ topic.title }}</a>
-                    {% if current_user.is_authenticated and (current_user.id == topic.author_id) %}
-                    <a href="/topic_edit/{{ topic.id }}" class="btn btn-outline-info">edit</a>
-                    <a href="/topic_delete/{{ topic.id }}" class="btn btn-outline-danger">delete</a>
-                    {% endif %}
-                </p>
+<div style="margin: 10%;margin-top: 1%;padding: 20px;font-size: 14px;background-color: #F7F8FA;border: 1px solid #DBDCDD;border-radius: 0 0 6px 6px;">
+    <h2 style="text-align: center;">Темы участников</h2>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <h6>{{ form.search.label }}</h6>
+                        {{ form.search(class="form-control", placeholder="Введите поисковый запрос") }}
+                        {% for error in form.search.errors %}
+                            <p class="alert alert-danger" role="alert">
+                                {{ error }}
+                            </p>
+                        {% endfor %}
+                    </div>
+                    <div class="col-2">
+                        <h6 style="color:#F7F8FA">j</h6>  <!-- Чтобы было ровно -->
+                        {{ form.submit(type="submit", class="btn btn-primary", style="width: 100%;") }}
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col">
+                        <h6>{{ form.category.label }}</h6>
+                        {{ form.category(class="form-control") }}<br>
+                            {% for error in form.category.errors %}
+                                <p class="alert alert-danger" role="alert">
+                                    {{ error }}
+                                </p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="list-group">
+                            {% for topic in topics %}
+                            <a href="/topic/{{ topic.id }}" class="list-group-item list-group-item-action">
+                                <div style="font-size: 17px;line-height: 24px;font-weight: 400;font-family: Helvetica,Arial,sans-serif;color: #333;word-break: break-word;">
+                                    {% if topic_data[topic]['user'].profile_img %}
+                                    <img src="/{{ topic_data[topic]['user'].profile_img }}" width="40" height="40" style="border-radius: 100px;">
+                                    {% else %}
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxmwWDfc034Ea1LFCRRg__dQtvJQBpkRAKgA&usqp=CAU" width="40" height="40" style="border-radius: 100px;">
+                                    {% endif %}
+                                    {{ topic.title }}
+                                </div>
+                                Автор: {{ topic_data[topic]['user'].name }}, Категория: {{ topic_data[topic]['category'].title }}, Дата: {{ topic.date }}, Ответы: {{ topic_data[topic]['len_message'] }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col">
+                        <a class="btn btn-outline-primary" href="/add_topic" style="width:100%;">
+                            Добавить новую тему
+                        </a>
+                    </div>
+                </div>
             </div>
-        </li>
-        {% endfor %}
-    </ul>
+    </form>
 </div>
 {% endblock %}

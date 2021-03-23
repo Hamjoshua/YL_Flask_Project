@@ -31,7 +31,7 @@ class UserResource(Resource):
         return jsonify({'success': 'OK'})
 
 
-class UsersListResource(Resource):
+class UserListResource(Resource):
     def get(self):
         session = db_session.create_session()
         users = session.query(User).all()
