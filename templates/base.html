@@ -13,10 +13,11 @@
     <title>{{ title }}</title>
 </head>
 <body>
+    {% set title = "WorldAnswerForum" %}
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
           <div class="container-fluid">
-            <a class="navbar-brand" href="/">WorldAnswerForum</a>
+            <a class="navbar-brand" href="/">{{ title }}</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -47,6 +48,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
                       <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
                     </svg>
+                      <span class="badge bg-secondary">{{ get_notifies_num() }}</span>
                     {% else %}
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
                       <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
@@ -64,6 +66,9 @@
                         {{ notify.text }}
                     </a></li>
                     {% endfor %}
+                    <li>
+                        <a class="btn btn-outline-danger btn-sm" href="{{ url_for('clear_notifies') }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="После очистки нужно обновить страницу" style="text-align: center;">очистить уведомления({{ get_notifies_num() }})</a>
+                    </li>
                     {% else %}
                       <li>Нет уведомлений</li>
                     {% endif %}
@@ -121,16 +126,21 @@
     <main role="main" class="container">
         {% block content %}{% endblock %}
     </main>
+    <!-- Bottom page content -->
     <nav class="navbar fixed-bottom navbar-light bg-light">
       <div class="container-fluid">
         <div>
           <span class="navbar-text">
-              WorldAnswerForum
+              {{ title }}
           </span>
          </div>
         <div>
-          <a class="btn btn-outline-success btn-sm" href="/about">about</a>
-          <a class="btn btn-outline-success btn-sm" href="/help">help</a>
+          <!-- Button trigger AboutModal -->
+          <button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#AboutModal">
+            about
+          </button>
+          <!-- Button trigger QuestionModal -->
+          <a class="btn btn-outline-success btn-sm" href="/question">help</a>
           <a class="btn btn-secondary btn-sm" href="https://github.com/Hamjoshua/YL_Flask_Project">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
               <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
@@ -139,5 +149,26 @@
         </div>
       </div>
     </nav>
+    <!-- AboutModal -->
+    <div class="modal fade" id="AboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="aboutModalLabel">About</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            {{ title }} — это пространство, в котором вы можете задавать вопросы и получать настоящие ответы от живых людей, это мгновенная помощь по любому вопросу от тысяч пользователей онлайн!
+            <br><br>
+            Благодаря {{ title }} вы можете узнать мнение миллионов пользователей проекта по любому насущному вопросу, публиковать ответы на вопросы других пользователей, комментировать их, выбирать лучшие ответы на чужие вопросы, а также получать моментальные уведомления об ответах на свои вопросы и других действиях (например, оценках ответов).
+            <br><br>
+            Делитесь тем, что знаете, и задавайте вопросы на любые темы. Вы обязательно найдете ответ!
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 </html>

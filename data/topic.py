@@ -10,16 +10,17 @@ from .db_session import SqlAlchemyBase
 class Topic(SqlAlchemyBase, SerializerMixin):
     __tablename__ = 'topics'
 
-    id = sqlalchemy.Column(sqlalchemy.Integer, autoincrement=True, primary_key=True,
-                           nullable=False)
+    id = sqlalchemy.Column(
+        sqlalchemy.Integer, autoincrement=True,
+        primary_key=True, nullable=False)
     title = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     text = sqlalchemy.Column(sqlalchemy.String)
     img = sqlalchemy.Column(sqlalchemy.String)
     date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now)
-    category_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('category.id'),
-                                    nullable=False)
-    author_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'),
-                                  nullable=False)
+    category_id = sqlalchemy.Column(
+        sqlalchemy.Integer, sqlalchemy.ForeignKey('category.id'), nullable=False)
+    author_id = sqlalchemy.Column(
+        sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'), nullable=False)
 
     user = orm.relation('User')
     category = orm.relation('Category')

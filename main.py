@@ -16,15 +16,17 @@ from forms.loginform import LoginForm
 from forms.topicform import TopicForm
 from forms.messageform import MessageForm
 from forms.searchtopicform import SearchTopicForm
+from forms.questionform import QuestionForm
 from api import user_api
 # from api import message_resources, subtopic_resources, \
 #     topic_resources, user_resources
 
-ROLES = ["user", "admin", "banned"]
+ROLES = ["user", "admin", "banned", "moder"]
 MAX_TOPIC_SHOW = 20
 
 TOPIC_IMG_DIR = 'static/img/topic_img'
 PROFILE_IMG_DIR = 'static/img/profile_img'
+QUESTION_IMG_DIR = 'static/img/quest_img'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'I2D4423D2Q53D'
@@ -57,11 +59,40 @@ def logout():
 @app.route('/')
 @app.route('/index')
 def index():
+    # Actions with cookies
     visits_count = session.get('visits_count', 0)
     session['visits_count'] = visits_count + 1
     if not visits_count:
         print('Вы пришли на эту страницу в первый раз за последние 2 года')
-    return render_template('index.html', title='Главная')
+
+    return render_template(
+        'index.html', title='WorldAnswerForum')
+
+
+@app.route('/question', methods=['GET', 'POST'])
+def user_question():
+    form = QuestionForm()
+    db_sess = db_session.create_session()
+    if request.method == 'POST':
+        if form.submit_question.data:
+            question = Question()
+            question.title = form.question_topic.data
+            question.text = form.question_text.data
+            question.email = form.email.data
+
+            added_img = form.img.data
+            if added_img:
+                f = added_img
+                filename = f'{QUESTION_IMG_DIR}/{f.filename}'
+                f.save(filename)
+                question.img = filename
+            else:
+                question.img = ''
+
+            db_sess.add(question)
+            db_sess.commit()
+            return redirect('/')
+    return render_template('question.html', form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -106,10 +137,12 @@ def login():
 def profile(user_id):
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(User.id == user_id).first()
-    return render_template('user_profile.html', title='Профиль:', user=user)
+    return render_template(
+        'user_profile.html', title='Профиль:', user=user)
 
 
 @app.route('/edit_profile/<int:user_id>', methods=['GET', 'POST'])
+@login_required
 def edit_profile(user_id):
     form = UserForm()
     db_sess = db_session.create_session()
@@ -203,6 +236,13 @@ def one_topic(topic_id):
         message.message = message_form.message.data
         message.topic_id = topic.id
         message.author_id = current_user.id
+        if current_user.id != user.id:
+            notify = Notify()
+            notify.user_id = user.id
+            notify.href = f'/topic/{topic_id}'
+            notify.text = \
+                f'Пользователь {current_user.name} оставил комментарий под вашей темой!'
+            db_sess.add(notify)
         db_sess.add(message)
         db_sess.commit()
         return redirect(f'/topic/{topic_id}')
@@ -338,6 +378,25 @@ def message_delete(message_id):
         abort(404)
 
 
+@app.route('/clear_notifies')
+def clear_notifies():
+    db_sess = db_session.create_session()
+    notifies = db_sess.query(Notify).filter(
+        Notify.user_id == current_user.id)
+    for notify in notifies:
+        db_sess.delete(notify)
+    print(f'Уведомления {current_user.name} очищены')
+    db_sess.commit()
+    return redirect('/')
+
+
+def get_notifies_num():
+    db_sess = db_session.create_session()
+    notifies = db_sess.query(Notify).filter(
+        Notify.user_id == current_user.id)
+    return len(list(notifies))
+
+
 def init_category_table():
     db_sess = db_session.create_session()
     with open("static/categories.csv", mode='rt', encoding='utf-8') as csv_file:
@@ -367,6 +426,8 @@ def main():
     db_session.global_init('db/forum.db')
     init_role_table()
     init_category_table()
+    app.jinja_env.globals.update(
+        get_notifies_num=get_notifies_num)
     '''
     api.add_resource(message_resources.MessageResource, '/api/messages/<int:messages_id>')
     api.add_resource(message_resources.MessageListResource, '/api/messages')

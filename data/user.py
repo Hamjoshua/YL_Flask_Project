@@ -9,13 +9,16 @@ from .db_session import SqlAlchemyBase
 
 class User(SqlAlchemyBase, UserMixin, SerializerMixin):
     __tablename__ = 'users'
-    id = sqlalchemy.Column(sqlalchemy.Integer, autoincrement=True, primary_key=True,
-                           nullable=False)
+    id = sqlalchemy.Column(
+        sqlalchemy.Integer, autoincrement=True,
+        primary_key=True, nullable=False)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=False)
-    email = sqlalchemy.Column(sqlalchemy.String, index=True, unique=True, nullable=True)
-    hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=False)
-    role_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('roles.id'),
-                                default=1)
+    email = sqlalchemy.Column(
+        sqlalchemy.String, index=True, unique=True, nullable=True)
+    hashed_password = sqlalchemy.Column(
+        sqlalchemy.String, nullable=False)
+    role_id = sqlalchemy.Column(
+        sqlalchemy.Integer, sqlalchemy.ForeignKey('roles.id'), default=1)
     about = sqlalchemy.Column(sqlalchemy.String)
     area = sqlalchemy.Column(sqlalchemy.String)
     profile_img = sqlalchemy.Column(sqlalchemy.String)
