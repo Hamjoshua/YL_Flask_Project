@@ -2,20 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46094b63-d38f-4935-801f-4c36d4f600cd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/data/question.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/forms/questionform.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/question.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/__all_models.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/__all_models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/category.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/category.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/message.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/message.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/notify.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/notify.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/role.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/role.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/topic.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/topic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/forum.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/forum.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forms/userform.py" beforeDir="false" afterPath="$PROJECT_DIR$/forms/userform.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_edit.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +35,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../PyCharm2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RecentsManager">
@@ -151,26 +141,26 @@
       <screen x="1366" y="-165" width="1920" height="1040" />
     </state>
     <state x="2106" y="110" key="FileChooserDialogImpl/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616466037406" />
-    <state width="1899" height="225" key="GridCell.Tab.0.bottom" timestamp="1616571696363">
+    <state width="1899" height="414" key="GridCell.Tab.0.bottom" timestamp="1616679868210">
       <screen x="1366" y="-165" width="1920" height="1040" />
     </state>
     <state width="1345" height="172" key="GridCell.Tab.0.bottom/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1616431240981" />
-    <state width="1899" height="225" key="GridCell.Tab.0.bottom/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616571696363" />
-    <state width="1899" height="225" key="GridCell.Tab.0.center" timestamp="1616571696363">
+    <state width="1899" height="414" key="GridCell.Tab.0.bottom/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616679868210" />
+    <state width="1899" height="414" key="GridCell.Tab.0.center" timestamp="1616679868209">
       <screen x="1366" y="-165" width="1920" height="1040" />
     </state>
     <state width="1345" height="172" key="GridCell.Tab.0.center/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1616431240981" />
-    <state width="1899" height="225" key="GridCell.Tab.0.center/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616571696363" />
-    <state width="1899" height="225" key="GridCell.Tab.0.left" timestamp="1616571696362">
+    <state width="1899" height="414" key="GridCell.Tab.0.center/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616679868209" />
+    <state width="1899" height="414" key="GridCell.Tab.0.left" timestamp="1616679868209">
       <screen x="1366" y="-165" width="1920" height="1040" />
     </state>
     <state width="1345" height="172" key="GridCell.Tab.0.left/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1616431240981" />
-    <state width="1899" height="225" key="GridCell.Tab.0.left/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616571696362" />
-    <state width="1899" height="225" key="GridCell.Tab.0.right" timestamp="1616571696363">
+    <state width="1899" height="414" key="GridCell.Tab.0.left/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616679868209" />
+    <state width="1899" height="414" key="GridCell.Tab.0.right" timestamp="1616679868210">
       <screen x="1366" y="-165" width="1920" height="1040" />
     </state>
     <state width="1345" height="172" key="GridCell.Tab.0.right/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1616431240981" />
-    <state width="1899" height="225" key="GridCell.Tab.0.right/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616571696363" />
+    <state width="1899" height="414" key="GridCell.Tab.0.right/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616679868210" />
     <state width="1899" height="346" key="GridCell.Tab.1.bottom" timestamp="1616571696331">
       <screen x="1366" y="-165" width="1920" height="1040" />
     </state>

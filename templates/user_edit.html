@@ -5,17 +5,19 @@
     <h2 style="text-align: center;">Изменение профиля:  {{ user.name }}</h2>
     <form action="" method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
+
         <ul class="list-group">
             <li class="list-group-item">
                 <h5>Profile image:</h5>
                 <p>
-                    {{ form.profile_img(class="form-control") }}<br>
+                    {{ form.profile_img(class="form-control") }}
                     {% for error in form.profile_img.errors %}
                         <p class="alert alert-danger" role="alert">
                             {{ error }}
                         </p>
                     {% endfor %}
                 </p>
+                <p><h6>{{ form.edit_img() }} {{ form.edit_img.label }}</h6></p>
             </li>
             <li class="list-group-item">
                 <h5>About:</h5>

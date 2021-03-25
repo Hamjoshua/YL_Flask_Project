@@ -1,11 +1,10 @@
-import os
 import datetime
 from csv import reader
 from requests import get
 
 from flask import Flask, request, render_template, redirect, abort, session, url_for
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from flask_restful import reqparse, abort, Api, Resource
+from flask_restful import abort, Api
 from werkzeug.utils import secure_filename
 
 from data import db_session
@@ -153,14 +152,15 @@ def edit_profile(user_id):
         return render_template('user_edit.html', form=form, user=user)
     else:
 
-        added_img = form.profile_img.data
-        if added_img:
-            f = added_img
-            filename = f'{PROFILE_IMG_DIR}/{f.filename}'
-            f.save(filename)
-            user.profile_img = filename
-        else:
-            user.profile_img = ''
+        if form.edit_img.data:
+            added_img = form.profile_img.data
+            if added_img:
+                f = added_img
+                filename = f'{PROFILE_IMG_DIR}/{f.filename}'
+                f.save(filename)
+                user.profile_img = filename
+            else:
+                user.profile_img = ''
 
         user.area = form.area.data
         user.about = form.about.data
