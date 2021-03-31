@@ -2,5 +2,18 @@
 
 {% block content %}
 <h2 style="text-align: center;">Area ({{ username }}): {{ city_from }}</h2>
-<img src="{{url_img}}" alt="картинка не нашлась" width="480" style="border-radius=800px;display: block;margin-left: auto;margin-right: auto">
+<img src="{{url_img}}" alt="картинка не нашлась" width="640" style="border-radius=800px;display: block;margin-left: auto;margin-right: auto; border: 2px solid #A0A0A0;">
+<form action="" method="post">
+{{ form.hidden_tag() }}
+    <div style="text-align: center;">
+        {{ form.map_type.label }}<br>
+        {{ form.map_type(class="form-control", type="email", style="height:50px; width:640px; text-align: center; display: inline-block; text-align: start; appearance: menulist; box-sizing: border-box; align-items: center; white-space: pre;") }}<br>
+        {% for error in form.map_type.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endfor %}
+        {{ form.submit(type="submit", class="btn btn-primary", style="height:50px; width:640px; margin-top: 1%;") }}<br>
+    </div>
+</form>
 {% endblock %}

@@ -16,6 +16,7 @@ from forms.topicform import TopicForm
 from forms.messageform import MessageForm
 from forms.searchtopicform import SearchTopicForm
 from forms.questionform import QuestionForm
+from forms.mapform import MapForm
 from api import user_api
 # from api import message_resources, subtopic_resources, \
 #     topic_resources, user_resources
@@ -169,10 +170,12 @@ def edit_profile(user_id):
         return redirect(f'/profile/{user.id}')
 
 
-@app.route('/show_map/<int:user_id>')
+@app.route('/show_map/<int:user_id>', methods=['GET', 'POST'])
 def show_map(user_id):
-    param = get(f'http://localhost:8000/api/users_param/{user_id}').json()
-    return render_template('show_user_area.html', **param)
+    form = MapForm()
+    print(form.map_type.data)
+    param = get(f'http://localhost:8000/api/users_param/{form.map_type.data}/{user_id}').json()
+    return render_template('show_user_area.html', **param, form=form)
 
 
 @app.route("/categories")
