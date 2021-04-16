@@ -1,5 +1,5 @@
 from flask import abort, jsonify
-from flask_restful import abort, Resource, reqparse, Api
+from flask_restful import abort, Resource
 
 from data import db_session
 from api.message_reqparser import *
@@ -20,7 +20,8 @@ class MessageResource(Resource):
         message = session.query(Message).get(message_id)
         return jsonify({
             'message': message.to_dict(
-                only=('message', 'subtopic_id', 'author_id', 'time'))})
+                only=('message', 'topic_id',
+                      'author_id', 'time'))})
 
     def delete(self, message_id):
         abort_if_message_not_found(message_id)
@@ -30,6 +31,21 @@ class MessageResource(Resource):
         session.commit()
         return jsonify({'success': 'OK'})
 
+    def put(self, message_id):
+        abort_if_message_not_found(message_id)
+        session = db_session.create_session()
+        args = parser.parse_args()
+        message = session.query(Message).get(message_id)
+
+        if args['title']:
+            message.message = args['message']
+        if args['topic_id']:
+            message.topic_id = args['topic_id']
+        if args['author_id']:
+            message.author_id = args['author_id']
+
+        session.commit()
+
 
 class MessageListResource(Resource):
     def get(self):
@@ -37,7 +53,8 @@ class MessageListResource(Resource):
         message = session.query(Message).all()
         return jsonify({
             'message': [item.to_dict(
-                only=('message', 'subtopic_id', 'author_id', 'time'))
+                only=('message', 'topic_id',
+                      'author_id', 'time'))
                 for item in message]})
 
     def post(self):
@@ -45,9 +62,8 @@ class MessageListResource(Resource):
         session = db_session.create_session()
         message = Message()
         message.message = args['message']
-        message.subtopic_id = args['subtopic_id']
+        message.topic_id = args['topic_id']
         message.author_id = args['author_id']
-        message.time = args['time']
         session.add(message)
         session.commit()
         return jsonify({'success': 'OK'})

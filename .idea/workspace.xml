@@ -2,20 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46094b63-d38f-4935-801f-4c36d4f600cd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/static/img/not_found_error.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/topic_edit.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/map_user_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/map_user_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/forum.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/forum.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forms/loginform.py" beforeDir="false" afterPath="$PROJECT_DIR$/forms/loginform.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forms/messageform.py" beforeDir="false" afterPath="$PROJECT_DIR$/forms/messageform.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forms/questionform.py" beforeDir="false" afterPath="$PROJECT_DIR$/forms/questionform.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forms/registerform.py" beforeDir="false" afterPath="$PROJECT_DIR$/forms/registerform.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forms/searchtopicform.py" beforeDir="false" afterPath="$PROJECT_DIR$/forms/searchtopicform.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forms/topicform.py" beforeDir="false" afterPath="$PROJECT_DIR$/forms/topicform.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forms/userform.py" beforeDir="false" afterPath="$PROJECT_DIR$/forms/userform.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/one_topic.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/one_topic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/message_reqparser.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/message_reqparser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/message_resources.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/message_resources.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/subtopic_reqparser.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/category_reqparser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/subtopic_resources.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/category_resources.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/topic_reqparser.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/topic_reqparser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/topic_resources.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/topic_resources.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/user_reqparser.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/user_reqparser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/user_resources.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/user_resources.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
