@@ -19,12 +19,14 @@ blueprint = flask.Blueprint(
 def get_ll_spn(toponym):
     lower_corner = tuple(map(float, toponym['boundedBy']['Envelope']['lowerCorner'].split()))
     upper_corner = tuple(map(float, toponym['boundedBy']['Envelope']['upperCorner'].split()))
-    ll = f'{abs(upper_corner[0] - lower_corner[0])},{abs(upper_corner[1] - lower_corner[1])}'
-    return toponym['Point']['pos'].replace(' ', ','), ll
+    spn = f'{abs(upper_corner[0] - lower_corner[0])},{abs(upper_corner[1] - lower_corner[1])}'
+    lon, lat = toponym['Point']['pos'].split()
+    ll = ",".join([lon, lat])
+    return ll, spn
 
 
-@blueprint.route('/api/users_param/<string:map_type>/<int:user_id>', methods=['GET'])
-def get_users_param(map_type, user_id):
+@blueprint.route('/api/get_users_map/<string:map_type>/<int:user_id>', methods=['GET'])
+def get_users_map(map_type, user_id):
     db_sess = db_session.create_session()
     user = db_sess.query(User).get(user_id)
     if not user:
@@ -55,8 +57,6 @@ def get_users_param(map_type, user_id):
     map_api_server = "http://static-maps.yandex.ru/1.x/"
     map_params = {"ll": ll, "l": map_type, "spn": spn}
     response = requests.get(map_api_server, params=map_params)
-
     param['url_img'] = response.url
-    print(param['url_img'])
 
     return jsonify(param)

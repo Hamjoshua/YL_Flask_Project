@@ -7,7 +7,7 @@
 {{ form.hidden_tag() }}
     <div style="text-align: center;">
         {{ form.map_type.label }}<br>
-        {{ form.map_type(class="form-control", type="email", style="height:50px; width:640px; text-align: center; display: inline-block; text-align: start; appearance: menulist; box-sizing: border-box; align-items: center; white-space: pre;") }}<br>
+        {{ form.map_type(class="form-control", style="height:50px; width:640px; text-align: center; display: inline-block; text-align: start; appearance: menulist; box-sizing: border-box; align-items: center; white-space: pre;") }}<br>
         {% for error in form.map_type.errors %}
             <div class="alert alert-danger" role="alert">
                 {{ error }}

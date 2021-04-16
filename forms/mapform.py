@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import SubmitField, SelectField
 
-MAP_TYPES = ['map', 'sat', 'skl']
+MAP_TYPES = [('map', 'map'), ('sat', 'sat'), ('skl', 'skl')]
 
 
 class MapForm(FlaskForm):
