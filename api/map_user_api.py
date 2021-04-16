@@ -16,8 +16,17 @@ blueprint = flask.Blueprint(
 )
 
 
-@blueprint.route('/api/users_param/<int:user_id>', methods=['GET'])
-def get_users_param(user_id):
+def get_ll_spn(toponym):
+    lower_corner = tuple(map(float, toponym['boundedBy']['Envelope']['lowerCorner'].split()))
+    upper_corner = tuple(map(float, toponym['boundedBy']['Envelope']['upperCorner'].split()))
+    spn = f'{abs(upper_corner[0] - lower_corner[0])},{abs(upper_corner[1] - lower_corner[1])}'
+    lon, lat = toponym['Point']['pos'].split()
+    ll = ",".join([lon, lat])
+    return ll, spn
+
+
+@blueprint.route('/api/get_users_map/<string:map_type>/<int:user_id>', methods=['GET'])
+def get_users_map(map_type, user_id):
     db_sess = db_session.create_session()
     user = db_sess.query(User).get(user_id)
     if not user:
@@ -43,12 +52,11 @@ def get_users_param(user_id):
         print('Not found')
         param['url_img'] = 'https://static.vecteezy.com/system/resources/previews/000/250/876/original/vector-error-404-unavailable-web-page-file-not-found-concept.jpg'
         return jsonify(param)
-    toponym_longitude, toponym_lattitude = toponym[0]["GeoObject"]["Point"]["pos"].split()
-    map_api_server = "http://static-maps.yandex.ru/1.x/"
-    map_params = {"ll": ",".join([toponym_longitude, toponym_lattitude]), "l": "sat"}
-    response = requests.get(map_api_server, params=map_params)
 
+    ll, spn = get_ll_spn(toponym[0]["GeoObject"])
+    map_api_server = "http://static-maps.yandex.ru/1.x/"
+    map_params = {"ll": ll, "l": map_type, "spn": spn}
+    response = requests.get(map_api_server, params=map_params)
     param['url_img'] = response.url
-    print(param['url_img'])
 
     return jsonify(param)

@@ -1,3 +1,4 @@
+import os
 import datetime
 from csv import reader
 from requests import get
@@ -16,19 +17,21 @@ from forms.topicform import TopicForm
 from forms.messageform import MessageForm
 from forms.searchtopicform import SearchTopicForm
 from forms.questionform import QuestionForm
-from api import user_api
+from forms.mapform import MapForm
+from api import map_user_api
 # from api import message_resources, subtopic_resources, \
 #     topic_resources, user_resources
 
 ROLES = ["user", "admin", "banned", "moder"]
 MAX_TOPIC_SHOW = 20
 
-TOPIC_IMG_DIR = 'static/img/topic_img'
-PROFILE_IMG_DIR = 'static/img/profile_img'
-QUESTION_IMG_DIR = 'static/img/quest_img'
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+TOPIC_IMG_DIR = os.path.join(PROJECT_ROOT, 'static/img/topic_img')
+PROFILE_IMG_DIR = os.path.join(PROJECT_ROOT, 'static/img/profile_img')
+QUESTION_IMG_DIR = os.path.join(PROJECT_ROOT, 'static/img/quest_img')
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'I2D4423D2Q53D'
+app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(days=365)
 
 login_manager = LoginManager()
@@ -63,6 +66,8 @@ def index():
     session['visits_count'] = visits_count + 1
     if not visits_count:
         print('Вы пришли на эту страницу в первый раз за последние 2 года')
+    else:
+        print(f'Вы пришли на эту страницу в {visits_count} раз')
 
     return render_template(
         'index.html', title='WorldAnswerForum')
@@ -103,7 +108,8 @@ def register():
                 'register.html', title='Регистрация', form=form,
                 message="Пароли не совпадают")
         db_sess = db_session.create_session()
-        if db_sess.query(User).filter(User.email == form.email.data).first():
+        if db_sess.query(User).filter(
+                User.email == form.email.data).first():
             return render_template(
                 'register.html', title='Регистрация', form=form,
                 message="Такой email уже есть")
@@ -115,7 +121,9 @@ def register():
         db_sess.add(user)
         db_sess.commit()
         return redirect('/login')
-    return render_template('register.html', title='Регистрация', form=form)
+    return render_template(
+        'register.html', title='Регистрация', 
+        form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -123,19 +131,24 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
-        user = db_sess.query(User).filter(User.email == form.email.data).first()
+        user = db_sess.query(User).filter(
+            User.email == form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)  # значение галочки
             return redirect("/")
         return render_template(
-            'login.html', message="Неправильный логин или пароль", form=form)
-    return render_template('login.html', title='Авторизация', form=form)
+            'login.html', message="Неправильный логин или пароль", 
+            form=form)
+    return render_template(
+        'login.html', title='Авторизация', 
+        form=form)
 
 
 @app.route('/profile/<int:user_id>')
 def profile(user_id):
     db_sess = db_session.create_session()
-    user = db_sess.query(User).filter(User.id == user_id).first()
+    user = db_sess.query(User).filter(
+        User.id == user_id).first()
     return render_template(
         'user_profile.html', title='Профиль:', user=user)
 
@@ -145,11 +158,13 @@ def profile(user_id):
 def edit_profile(user_id):
     form = UserForm()
     db_sess = db_session.create_session()
-    user = db_sess.query(User).filter(User.id == user_id).first()
+    user = db_sess.query(User).filter(
+        User.id == user_id).first()
     if request.method == "GET":
         form.area.data = user.area
         form.about.data = user.about
-        return render_template('user_edit.html', form=form, user=user)
+        return render_template(
+            'user_edit.html', form=form, user=user)
     else:
 
         if form.edit_img.data:
@@ -169,20 +184,25 @@ def edit_profile(user_id):
         return redirect(f'/profile/{user.id}')
 
 
-@app.route('/show_map/<int:user_id>')
+@app.route('/show_map/<int:user_id>', methods=['GET', 'POST'])
 def show_map(user_id):
-    param = get(f'http://localhost:8000/api/users_param/{user_id}').json()
-    return render_template('show_user_area.html', **param)
+    form = MapForm()
+    param = get(
+        f'http://localhost:8000/api/get_users_map/{form.map_type.data}/{user_id}'
+    ).json()
+    return render_template('show_user_area.html', **param, form=form)
 
 
 @app.route("/categories")
 def all_categories():
     db_sess = db_session.create_session()
     categories = list(db_sess.query(Category).all())
-    # divide by 4 columns
+    
+    # Divide by 4 columns
     four_category_lists = \
         [categories[len(categories) // 4 * i:len(categories) // 4 * (i + 1)]
          for i in range(4)]
+    
     return render_template(
         "categories.html",
         four_category_lists=four_category_lists)
@@ -266,9 +286,11 @@ def one_topic(topic_id):
 @login_required
 def add_topics():
     form = TopicForm()
+    
     if form.validate_on_submit():
         db_sess = db_session.create_session()
-        if db_sess.query(Topic).filter(Topic.title == form.title.data).first():
+        if db_sess.query(Topic).filter(
+                Topic.title == form.title.data).first():
             return render_template(
                 'topic_add.html', form=form,
                 message="Такой топик уже есть")
@@ -291,6 +313,7 @@ def add_topics():
         db_sess.add(topic)
         db_sess.commit()
         return redirect(f'/topics/{form.category.data}')
+    
     return render_template('topic_add.html', form=form)
 
 
@@ -357,10 +380,11 @@ def edit_message(message_id):
         else:
             abort(404)
     return render_template(
-        'message_edit.html', form=form,
+        'message_edit.html',
         message=message,
         topic=db_sess.query(Topic).get(
-            message.topic_id))
+            message.topic_id), 
+        form=form)
 
 
 @app.route('/message_delete/<int:message_id>', methods=['GET', 'POST'])
@@ -414,34 +438,47 @@ def init_category_table():
 def init_role_table():
     db_sess = db_session.create_session()
     for role_name in ROLES:
-        role = db_sess.query(Role).filter(Role.role == role_name).first()
+        role = db_sess.query(Role).filter(
+            Role.role == role_name).first()
         if not role:
             role = Role()
             role.role = role_name
             db_sess.add(role)
             db_sess.commit()
+            
+            
+def generate_routes():
+    '''
+    api.add_resource(message_resources.MessageResource, '/api/messages/<int:messages_id>')
+    api.add_resource(message_resources.MessageListResource, '/api/messages')
+
+    api.add_resource(subtopic_resources.SubtopicResource, '/api/subtopics/<int:subtopics_id>')
+    api.add_resource(subtopic_resources.SubtopicListResource, '/api/subtopics')
+
+    api.add_resource(topic_resources.TopicResource, '/api/topics/<int:topics_id>')
+    api.add_resource(topic_resources.TopicListResource, '/api/topics')
+
+    api.add_resource(user_resources.UserResource, '/api/users/<int:users_id>')
+    api.add_resource(user_resources.UserListResource, '/api/users')
+    '''
 
 
 def main():
     db_session.global_init('db/forum.db')
     init_role_table()
     init_category_table()
+    
     app.jinja_env.globals.update(
         get_notifies_num=get_notifies_num)
-    '''
-    api.add_resource(message_resources.MessageResource, '/api/messages/<int:messages_id>')
-    api.add_resource(message_resources.MessageListResource, '/api/messages')
+
+    app.register_blueprint(map_user_api.blueprint)
+    generate_routes()
     
-    api.add_resource(subtopic_resources.SubtopicResource, '/api/subtopics/<int:subtopics_id>')
-    api.add_resource(subtopic_resources.SubtopicListResource, '/api/subtopics')
-    
-    api.add_resource(topic_resources.TopicResource, '/api/topics/<int:topics_id>')
-    api.add_resource(topic_resources.TopicListResource, '/api/topics')
-    
-    api.add_resource(user_resources.UserResource, '/api/users/<int:users_id>')
-    api.add_resource(user_resources.UserListResource, '/api/users')
-    '''
-    app.register_blueprint(user_api.blueprint)
+    # Для heroku
+    # port = int(os.environ.get("PORT", 5000))
+    # app.run(host='0.0.0.0', port=port)
+
+    # Для локального тестирования
     app.run(port=8000, host='127.0.0.1')
 
 
