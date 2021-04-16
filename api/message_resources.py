@@ -37,7 +37,7 @@ class MessageResource(Resource):
         args = parser.parse_args()
         message = session.query(Message).get(message_id)
 
-        if args['title']:
+        if args['message']:
             message.message = args['message']
         if args['topic_id']:
             message.topic_id = args['topic_id']

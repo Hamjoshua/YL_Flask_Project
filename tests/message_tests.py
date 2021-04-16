@@ -22,7 +22,7 @@ print(put('http://localhost:8000/api/messages/2', json=
 print(put('http://localhost:8000/api/messages/9999', json=
           {
               'message': 'TEST MESSAGE',
-              'category_id': 1,
+              'topic_id': 1,
               'author_id': 1
           }).json()
       )
@@ -42,7 +42,7 @@ print(put('http://localhost:8000/api/messages/9999', json={}).json())
 print(post('http://localhost:8000/api/messages', json=
            {
               'message': 'TEST message CREATED MESSAGE',
-              'category_id': 1,
+              'topic_id': 1,
               'author_id': 1
            }).json()
       )
@@ -52,7 +52,7 @@ print(post('http://localhost:8000/api/messages', json=
 print(post('http://localhost:8000/api/messages', json=
            {
               'message': 'TEST message CREATED MESSAGE',
-              'category_id': 1,
+              'topic_id': 1,
               'author_id': 'ddd'
            }).json()
       )
