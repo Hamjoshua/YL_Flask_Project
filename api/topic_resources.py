@@ -48,6 +48,7 @@ class TopicResource(Resource):
             topic.author = args['author_id']
 
         session.commit()
+        return jsonify({'success': 'OK'})
 
 
 class TopicListResource(Resource):

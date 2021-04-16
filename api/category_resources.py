@@ -40,6 +40,7 @@ class CategoryResource(Resource):
             category.title = args['title']
 
         session.commit()
+        return jsonify({'success': 'OK'})
 
 
 class CategoryListResource(Resource):

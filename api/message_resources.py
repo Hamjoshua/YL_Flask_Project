@@ -45,6 +45,7 @@ class MessageResource(Resource):
             message.author_id = args['author_id']
 
         session.commit()
+        return jsonify({'success': 'OK'})
 
 
 class MessageListResource(Resource):

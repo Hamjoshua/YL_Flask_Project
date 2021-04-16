@@ -52,6 +52,7 @@ class UserResource(Resource):
             user.title = args['area']
 
         session.commit()
+        return jsonify({'success': 'OK'})
 
 
 class UserListResource(Resource):
