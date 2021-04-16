@@ -3,10 +3,10 @@ import datetime
 from csv import reader
 from requests import get
 
-from flask import Flask, request, render_template, redirect, abort, session, url_for
-from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from flask import Flask, request, render_template, redirect, abort, session
+from flask_login import LoginManager, login_user, \
+    login_required, logout_user, current_user
 from flask_restful import abort, Api
-from werkzeug.utils import secure_filename
 
 from data import db_session
 from data.__all_models import *
@@ -18,9 +18,10 @@ from forms.messageform import MessageForm
 from forms.searchtopicform import SearchTopicForm
 from forms.questionform import QuestionForm
 from forms.mapform import MapForm
+from api import message_resources, category_resources, \
+    topic_resources, user_resources
 from api import map_user_api
-# from api import message_resources, subtopic_resources, \
-#     topic_resources, user_resources
+
 
 ROLES = ["user", "admin", "banned", "moder"]
 MAX_TOPIC_SHOW = 20
@@ -341,7 +342,8 @@ def edit_topics(topic_id):
             if topic:
                 form.title.data = topic.title
                 form.text.data = topic.text
-                form.category.data = topic.category_id
+                form.category.data = \
+                    topic.category_id
             else:
                 abort(404)
 
@@ -360,7 +362,8 @@ def edit_topics(topic_id):
                     else:
                         topic.img = ''
 
-                topic.category_id = form.category.data
+                topic.category_id = \
+                    form.category.data
                 db_sess.add(topic)
                 db_sess.commit()
                 return redirect('/topics/0')
@@ -375,7 +378,8 @@ def edit_topics(topic_id):
 @login_required
 def topics_delete(topic_id):
     db_sess = db_session.create_session()
-    topic = db_sess.query(Topic).filter(Topic.id == topic_id).first()
+    topic = db_sess.query(Topic).filter(
+        Topic.id == topic_id).first()
     if topic:
         if topic.user.id == current_user.id:
             # Clean topic messages
@@ -486,19 +490,17 @@ def init_role_table():
             
             
 def generate_routes():
-    '''
     api.add_resource(message_resources.MessageResource, '/api/messages/<int:messages_id>')
     api.add_resource(message_resources.MessageListResource, '/api/messages')
 
-    api.add_resource(subtopic_resources.SubtopicResource, '/api/subtopics/<int:subtopics_id>')
-    api.add_resource(subtopic_resources.SubtopicListResource, '/api/subtopics')
+    api.add_resource(category_resources.CategoryResource, '/api/categories/<int:subtopics_id>')
+    api.add_resource(category_resources.CategoryListResource, '/api/categories')
 
     api.add_resource(topic_resources.TopicResource, '/api/topics/<int:topics_id>')
     api.add_resource(topic_resources.TopicListResource, '/api/topics')
 
     api.add_resource(user_resources.UserResource, '/api/users/<int:users_id>')
     api.add_resource(user_resources.UserListResource, '/api/users')
-    '''
 
 
 def main():
