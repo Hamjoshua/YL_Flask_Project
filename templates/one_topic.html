@@ -21,12 +21,11 @@
             </div><br>
             </li>
             <li class="list-group-item">
-                <div>
+            <div>
                 {{ topic.text }}
             </div>
             </li>
             <li class="list-group-item">
-                {% if user.profile_img %}
                 <div>
                     <div class="accordion" id="accordionFlushExample">
                         <div class="accordion-item">
@@ -41,7 +40,7 @@
                                     <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                                         <div class="carousel-inner">
                                             <div class="carousel-item active">
-                                                <img src="/{{ topic.img }}" class="d-block w-100" alt="Пользователь не прикрепил картинку к теме :(" width="500" style="border-radius: 100px;display: block;margin-left: auto;margin-right: auto;">
+                                                <img src="/{{ topic.img }}" class="d-block w-100" alt="Пользователь не прикрепил картинку к теме :(" width="500" style="border-radius: 50px;display: block;margin-left: auto;margin-right: auto;">
                                             </div>
                                         </div>
                                     </div>
@@ -50,8 +49,12 @@
                         </div>
                     </div>
                 </div><br>
-            {% endif %}
+                {% if current_user.is_authenticated and (current_user.id == topic.user.id) %}
+                <a href="/topic_edit/{{ topic.id }}" type="button" class="btn btn-outline-success">Изменить</a>
+                <a href="/topic_delete/{{ topic.id }}" type="button" class="btn btn-outline-danger">Удалить</a>
+                {% endif %}
             </li>
+
         </ul><br>
         <ul class="list-group">
             <li class="list-group-item">
@@ -103,25 +106,3 @@
         {% endif %}
     </div>
 {% endblock %}
-
-
-<!--
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel" style="text-align: center;">Area: {{ city_from }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <img src="{{url_img}}" alt="картинка не нашлась" width="465" style="border-radius=800px;">
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Show on map
-</button>
--->

@@ -156,40 +156,47 @@ def profile(user_id):
 @app.route('/edit_profile/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def edit_profile(user_id):
-    form = UserForm()
-    db_sess = db_session.create_session()
-    user = db_sess.query(User).filter(
-        User.id == user_id).first()
-    if request.method == "GET":
-        form.area.data = user.area
-        form.about.data = user.about
-        return render_template(
-            'user_edit.html', form=form, user=user)
+    if current_user.id == user_id:
+        form = UserForm()
+        db_sess = db_session.create_session()
+        user = db_sess.query(User).filter(
+            User.id == user_id).first()
+        if request.method == "GET":
+            form.area.data = user.area
+            form.about.data = user.about
+            return render_template(
+                'user_edit.html', form=form, user=user)
+        else:
+
+            if form.edit_img.data:
+                added_img = form.profile_img.data
+                if added_img:
+                    f = added_img
+                    filename = f'{PROFILE_IMG_DIR}/{f.filename}'
+                    f.save(filename)
+                    user.profile_img = filename
+                else:
+                    user.profile_img = ''
+
+            user.area = form.area.data
+            user.about = form.about.data
+            db_sess.add(user)
+            db_sess.commit()
+            return redirect(f'/profile/{user.id}')
     else:
-
-        if form.edit_img.data:
-            added_img = form.profile_img.data
-            if added_img:
-                f = added_img
-                filename = f'{PROFILE_IMG_DIR}/{f.filename}'
-                f.save(filename)
-                user.profile_img = filename
-            else:
-                user.profile_img = ''
-
-        user.area = form.area.data
-        user.about = form.about.data
-        db_sess.add(user)
-        db_sess.commit()
-        return redirect(f'/profile/{user.id}')
+        return redirect('/')
 
 
 @app.route('/show_map/<int:user_id>', methods=['GET', 'POST'])
 def show_map(user_id):
     form = MapForm()
+    map_type_data = form.map_type.data
+    map_type = map_type_data \
+        if len(map_type_data) == 3 else 'map'
     param = get(
-        f'http://localhost:8000/api/get_users_map/{form.map_type.data}/{user_id}'
+        f'http://localhost:8000/api/get_users_map/{map_type}/{user_id}'
     ).json()
+    print(param, f"{map_type}/{user_id}")
     return render_template('show_user_area.html', **param, form=form)
 
 
@@ -212,6 +219,7 @@ def all_categories():
 def all_topics(category_id):
     form = SearchTopicForm()
     db_sess = db_session.create_session()
+
     if form.search.data is None:
         search_request = ''
     else:
@@ -239,6 +247,7 @@ def all_topics(category_id):
         topic_data[topic]['len_message'] = \
             len(list(db_sess.query(Message).filter(
                 Message.topic_id == topic.id)))
+
     return render_template(
         "topics.html", topics=topics, form=form,
         topic_data=topic_data)
@@ -289,6 +298,7 @@ def add_topics():
     
     if form.validate_on_submit():
         db_sess = db_session.create_session()
+
         if db_sess.query(Topic).filter(
                 Topic.title == form.title.data).first():
             return render_template(
@@ -317,31 +327,48 @@ def add_topics():
     return render_template('topic_add.html', form=form)
 
 
-'''
 @app.route('/topic_edit/<int:topic_id>', methods=['GET', 'POST'])
 @login_required
 def edit_topics(topic_id):
     form = TopicForm()
-    if request.method == "GET":
-        db_sess = db_session.create_session()
-        topic = db_sess.query(Topic).filter(
-            Topic.id == topic_id).first()
-        if topic:
-            form.title.data = topic.title
-        else:
-            abort(404)
-    if form.validate_on_submit():
-        db_sess = db_session.create_session()
-        topic = db_sess.query(Topic).filter(
-            Topic.id == topic_id).first()
-        if topic:
-            topic.title = form.title.data
-            db_sess.add(topic)
-            db_sess.commit()
-            return redirect('/topics')
-        else:
-            abort(404)
-    return render_template('topic_add.html', form=form)
+    db_sess = db_session.create_session()
+    topic = db_sess.query(Topic).filter(
+        Topic.id == topic_id).first()
+
+    if topic.author_id == current_user.id:
+
+        if request.method == "GET":
+            if topic:
+                form.title.data = topic.title
+                form.text.data = topic.text
+                form.category.data = topic.category_id
+            else:
+                abort(404)
+
+        if form.validate_on_submit():
+            if topic:
+                topic.title = form.title.data
+                topic.text = form.text.data
+
+                if form.edit_img.data:
+                    added_img = form.img.data
+                    if added_img:
+                        f = added_img
+                        filename = f'{TOPIC_IMG_DIR}/{f.filename}'
+                        f.save(filename)
+                        topic.img = filename
+                    else:
+                        topic.img = ''
+
+                topic.category_id = form.category.data
+                db_sess.add(topic)
+                db_sess.commit()
+                return redirect('/topics/0')
+            else:
+                abort(404)
+        return render_template('topic_edit.html', form=form)
+
+    return redirect('/')
 
 
 @app.route('/topic_delete/<int:topic_id>', methods=['GET', 'POST'])
@@ -350,12 +377,21 @@ def topics_delete(topic_id):
     db_sess = db_session.create_session()
     topic = db_sess.query(Topic).filter(Topic.id == topic_id).first()
     if topic:
-        db_sess.delete(topic)
-        db_sess.commit()
+        if topic.user.id == current_user.id:
+            # Clean topic messages
+            topic_messages = \
+                db_sess.query(Message).filter(
+                    Message.topic_id == topic.id)
+            for message in topic_messages:
+                db_sess.delete(message)
+                db_sess.commit()
+
+            # Delete topic and commit
+            db_sess.delete(topic)
+            db_sess.commit()
     else:
         abort(404)
-    return redirect('/topics')
-'''
+    return redirect('/topics/0')
 
 
 @app.route('/message_edit/<int:message_id>', methods=['GET', 'POST'])
@@ -372,11 +408,12 @@ def edit_message(message_id):
             abort(404)
     if form.validate_on_submit():
         if message:
-            message.message = form.message.data
-            db_sess.add(message)
-            db_sess.commit()
-            topic_id = message.topic_id
-            return redirect(f'/topic/{topic_id}')
+            if message.user.id == current_user.id:
+                message.message = form.message.data
+                db_sess.add(message)
+                db_sess.commit()
+                topic_id = message.topic_id
+                return redirect(f'/topic/{topic_id}')
         else:
             abort(404)
     return render_template(
@@ -394,10 +431,11 @@ def message_delete(message_id):
     message = db_sess.query(Message).filter(
         Message.id == message_id).first()
     if message:
-        topic_id = message.topic_id
-        db_sess.delete(message)
-        db_sess.commit()
-        return redirect(f'/topic/{topic_id}')
+        if message.user.id == current_user.id:
+            topic_id = message.topic_id
+            db_sess.delete(message)
+            db_sess.commit()
+            return redirect(f'/topic/{topic_id}')
     else:
         abort(404)
 

@@ -1,9 +1,7 @@
-from csv import reader
-
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SubmitField, FileField, BooleanField
-from wtforms.validators import DataRequired
-from flask_wtf.file import FileAllowed, FileStorage
+from wtforms import StringField, TextAreaField, \
+    SubmitField, FileField, BooleanField
+from flask_wtf.file import FileAllowed
 
 
 class UserForm(FlaskForm):

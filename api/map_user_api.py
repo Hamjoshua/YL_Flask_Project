@@ -1,8 +1,8 @@
 import requests
 
 import flask
-from flask import jsonify
-from flask import make_response, request, Flask
+from flask import Flask
+from flask import jsonify, url_for
 
 from data import db_session
 from data.__all_models import User
@@ -44,13 +44,13 @@ def get_users_map(map_type, user_id):
         print("Ошибка выполнения запроса:")
         print(response.url)
         print("Http статус:", response.status_code, "(", response.reason, ")")
-        param['url_img'] = 'https://static.vecteezy.com/system/resources/previews/000/250/876/original/vector-error-404-unavailable-web-page-file-not-found-concept.jpg'
+        param['url_img'] = url_for('static', filename='img/not_found_error.jpg')
         return jsonify(param)
     json_response = response.json()
     toponym = json_response["response"]["GeoObjectCollection"]["featureMember"]
     if not toponym:
         print('Not found')
-        param['url_img'] = 'https://static.vecteezy.com/system/resources/previews/000/250/876/original/vector-error-404-unavailable-web-page-file-not-found-concept.jpg'
+        param['url_img'] = url_for('static', filename='img/not_found_error.jpg')
         return jsonify(param)
 
     ll, spn = get_ll_spn(toponym[0]["GeoObject"])
