@@ -26,10 +26,9 @@ from api import map_user_api
 ROLES = ["user", "admin", "banned", "moder"]
 MAX_TOPIC_SHOW = 20
 
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-TOPIC_IMG_DIR = os.path.join(PROJECT_ROOT, 'static/img/topic_img')
-PROFILE_IMG_DIR = os.path.join(PROJECT_ROOT, 'static/img/profile_img')
-QUESTION_IMG_DIR = os.path.join(PROJECT_ROOT, 'static/img/quest_img')
+TOPIC_IMG_DIR = 'static/img/topic_img'
+PROFILE_IMG_DIR = 'static/img/profile_img'
+QUESTION_IMG_DIR = 'static/img/quest_img'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
