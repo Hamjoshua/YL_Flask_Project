@@ -3,6 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="46094b63-d38f-4935-801f-4c36d4f600cd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/map_user_api.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/message.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/message.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/topic.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/topic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/forum.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/forum.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/one_topic.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/one_topic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/show_user_area.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/show_user_area.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/topics.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/topics.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +40,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Project_Museum" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../PyCharm2" />
     <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RecentsManager">
@@ -178,30 +186,30 @@
       <screen x="1366" y="-165" width="1920" height="1040" />
     </state>
     <state x="2082" y="157" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616415272234" />
-    <state x="2106" y="110" key="FileChooserDialogImpl" timestamp="1618585273658">
+    <state x="2106" y="110" key="FileChooserDialogImpl" timestamp="1619006559092">
       <screen x="1366" y="-165" width="1920" height="1040" />
     </state>
-    <state x="2106" y="110" key="FileChooserDialogImpl/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1618585273658" />
-    <state width="949" height="283" key="GridCell.Tab.0.bottom" timestamp="1618585020965">
+    <state x="2106" y="110" key="FileChooserDialogImpl/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619006559092" />
+    <state width="1226" height="283" key="GridCell.Tab.0.bottom" timestamp="1619011001925">
       <screen x="1366" y="-165" width="1920" height="1040" />
     </state>
     <state width="1345" height="172" key="GridCell.Tab.0.bottom/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1616431240981" />
-    <state width="949" height="283" key="GridCell.Tab.0.bottom/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1618585020965" />
-    <state width="949" height="283" key="GridCell.Tab.0.center" timestamp="1618585020964">
+    <state width="1226" height="283" key="GridCell.Tab.0.bottom/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619011001925" />
+    <state width="1226" height="283" key="GridCell.Tab.0.center" timestamp="1619011001925">
       <screen x="1366" y="-165" width="1920" height="1040" />
     </state>
     <state width="1345" height="172" key="GridCell.Tab.0.center/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1616431240981" />
-    <state width="949" height="283" key="GridCell.Tab.0.center/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1618585020964" />
-    <state width="949" height="283" key="GridCell.Tab.0.left" timestamp="1618585020964">
+    <state width="1226" height="283" key="GridCell.Tab.0.center/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619011001925" />
+    <state width="1226" height="283" key="GridCell.Tab.0.left" timestamp="1619011001925">
       <screen x="1366" y="-165" width="1920" height="1040" />
     </state>
     <state width="1345" height="172" key="GridCell.Tab.0.left/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1616431240981" />
-    <state width="949" height="283" key="GridCell.Tab.0.left/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1618585020964" />
-    <state width="949" height="283" key="GridCell.Tab.0.right" timestamp="1618585020964">
+    <state width="1226" height="283" key="GridCell.Tab.0.left/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619011001924" />
+    <state width="1226" height="283" key="GridCell.Tab.0.right" timestamp="1619011001925">
       <screen x="1366" y="-165" width="1920" height="1040" />
     </state>
     <state width="1345" height="172" key="GridCell.Tab.0.right/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1616431240981" />
-    <state width="949" height="283" key="GridCell.Tab.0.right/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1618585020964" />
+    <state width="1226" height="283" key="GridCell.Tab.0.right/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619011001925" />
     <state width="1899" height="346" key="GridCell.Tab.1.bottom" timestamp="1616571696331">
       <screen x="1366" y="-165" width="1920" height="1040" />
     </state>

@@ -4,60 +4,63 @@
     <h2 style="text-align: center;">Темы участников</h2>
     <form action="" method="post">
         {{ form.hidden_tag() }}
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <h6>{{ form.search.label }}</h6>
-                        {{ form.search(class="form-control", placeholder="Введите поисковый запрос") }}
-                        {% for error in form.search.errors %}
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h6>{{ form.search.label }}</h6>
+                    {{ form.search(class="form-control", placeholder="Введите поисковый запрос") }}
+                    {% for error in form.search.errors %}
+                        <p class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </p>
+                    {% endfor %}
+                </div>
+                <div class="col-2">
+                    <h6 style="color:#F7F8FA">j</h6>  <!-- Чтобы было ровно -->
+                    {{ form.submit(type="submit", class="btn btn-primary", style="width: 100%;") }}
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col">
+                    <h6>{{ form.category.label }}</h6>
+                    {{ form.category(class="form-control") }}<br>
+                        {% for error in form.category.errors %}
                             <p class="alert alert-danger" role="alert">
                                 {{ error }}
                             </p>
-                        {% endfor %}
-                    </div>
-                    <div class="col-2">
-                        <h6 style="color:#F7F8FA">j</h6>  <!-- Чтобы было ровно -->
-                        {{ form.submit(type="submit", class="btn btn-primary", style="width: 100%;") }}
-                    </div>
-                </div><br>
-                <div class="row">
-                    <div class="col">
-                        <h6>{{ form.category.label }}</h6>
-                        {{ form.category(class="form-control") }}<br>
-                            {% for error in form.category.errors %}
-                                <p class="alert alert-danger" role="alert">
-                                    {{ error }}
-                                </p>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="list-group">
-                            {% for topic in topics %}
-                            <a href="/topic/{{ topic.id }}" class="list-group-item list-group-item-action">
-                                <div style="font-size: 17px;line-height: 24px;font-weight: 400;font-family: Helvetica,Arial,sans-serif;color: #333;word-break: break-word;">
-                                    {% if topic_data[topic]['user'].profile_img %}
-                                    <img src="/{{ topic_data[topic]['user'].profile_img }}" width="40" height="40" style="border-radius: 100px;">
-                                    {% else %}
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxmwWDfc034Ea1LFCRRg__dQtvJQBpkRAKgA&usqp=CAU" width="40" height="40" style="border-radius: 100px;">
-                                    {% endif %}
-                                    {{ topic.title }}
-                                </div>
-                                Автор: {{ topic_data[topic]['user'].name }}, Категория: {{ topic_data[topic]['category'].title }}, Дата: {{ topic.date }}, Ответы: {{ topic_data[topic]['len_message'] }}
-                            </a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div><br>
-                <div class="row">
-                    <div class="col">
-                        <a class="btn btn-outline-primary" href="/add_topic" style="width:100%;">
-                            Добавить новую тему
-                        </a>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
+            <div class="row">
+                <div class="col">
+                    <div class="list-group">
+                        {% for topic in topics %}
+                        <a href="/topic/{{ topic.id }}" class="list-group-item list-group-item-action">
+                            <div style="font-size: 17px;line-height: 24px;font-weight: 400;font-family: Helvetica,Arial,sans-serif;color: #333;word-break: break-word;">
+                                {% if topic_data[topic]['user'].profile_img %}
+                                <img src="/{{ topic_data[topic]['user'].profile_img }}" width="40" height="40" style="border-radius: 100px;">
+                                {% else %}
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxmwWDfc034Ea1LFCRRg__dQtvJQBpkRAKgA&usqp=CAU" width="40" height="40" style="border-radius: 100px;">
+                                {% endif %}
+                                {{ topic.title }}
+                                {% if topic.is_changed %}
+                                <span style="color: #6f7985;">(ред.)</span>
+                                {% endif %}
+                            </div>
+                            Автор: {{ topic_data[topic]['user'].name }}, Категория: {{ topic_data[topic]['category'].title }}, Дата: {{ topic.date }}, Ответы: {{ topic_data[topic]['len_message'] }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col">
+                    <a class="btn btn-outline-primary" href="/add_topic" style="width:100%;">
+                        Добавить новую тему
+                    </a>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 {% endblock %}

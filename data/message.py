@@ -22,6 +22,8 @@ class Message(SqlAlchemyBase, SerializerMixin):
         nullable=False)
     time = sqlalchemy.Column(
         sqlalchemy.DateTime, default=datetime.datetime.now)
+    is_changed = sqlalchemy.Column(
+        sqlalchemy.Boolean, default=False)
 
     user = orm.relation('User')
     topic = orm.relation('Topic')

@@ -21,6 +21,8 @@ class Topic(SqlAlchemyBase, SerializerMixin):
         sqlalchemy.Integer, sqlalchemy.ForeignKey('category.id'), nullable=False)
     author_id = sqlalchemy.Column(
         sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'), nullable=False)
+    is_changed = sqlalchemy.Column(
+        sqlalchemy.Boolean, default=False)
 
     user = orm.relation('User')
     category = orm.relation('Category')

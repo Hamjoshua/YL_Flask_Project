@@ -3,7 +3,8 @@ import datetime
 from csv import reader
 from requests import get
 
-from flask import Flask, request, render_template, redirect, abort, session
+from flask import Flask, request, render_template
+from flask import redirect, abort, session, jsonify, url_for
 from flask_login import LoginManager, login_user, \
     login_required, logout_user, current_user
 from flask_restful import abort, Api
@@ -20,7 +21,6 @@ from forms.questionform import QuestionForm
 from forms.mapform import MapForm
 from api import message_resources, category_resources, \
     topic_resources, user_resources
-from api import map_user_api
 
 
 ROLES = ["user", "admin", "banned", "moder"]
@@ -32,7 +32,8 @@ QUESTION_IMG_DIR = 'static/img/quest_img'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
-app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(days=365)
+app.config['PERMANENT_SESSION_LIFETIME'] = \
+    datetime.timedelta(days=365)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -133,12 +134,15 @@ def login():
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(
             User.email == form.email.data).first()
+
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)  # значение галочки
             return redirect("/")
+
         return render_template(
             'login.html', message="Неправильный логин или пароль", 
             form=form)
+
     return render_template(
         'login.html', title='Авторизация', 
         form=form)
@@ -193,11 +197,10 @@ def show_map(user_id):
     map_type_data = form.map_type.data
     map_type = map_type_data \
         if len(map_type_data) == 3 else 'map'
-    param = get(
-        f'http://localhost:8000/api/get_users_map/{map_type}/{user_id}'
-    ).json()
-    print(param, f"{map_type}/{user_id}")
-    return render_template('show_user_area.html', **param, form=form)
+    param = get_users_map(map_type, user_id)
+    return render_template(
+        'show_user_area.html', **param,
+        form=form)
 
 
 @app.route("/categories")
@@ -363,6 +366,7 @@ def edit_topics(topic_id):
 
                 topic.category_id = \
                     form.category.data
+                topic.is_changed = True
                 db_sess.add(topic)
                 db_sess.commit()
                 return redirect('/topics/0')
@@ -413,6 +417,7 @@ def edit_message(message_id):
         if message:
             if message.user.id == current_user.id:
                 message.message = form.message.data
+                message.is_changed = True
                 db_sess.add(message)
                 db_sess.commit()
                 topic_id = message.topic_id
@@ -460,6 +465,57 @@ def get_notifies_num():
     notifies = db_sess.query(Notify).filter(
         Notify.user_id == current_user.id)
     return len(list(notifies))
+
+
+def get_ll_spn(toponym):
+    lower_corner = tuple(map(float, toponym[
+        'boundedBy']['Envelope']['lowerCorner'].split()))
+    upper_corner = tuple(map(float, toponym[
+        'boundedBy']['Envelope']['upperCorner'].split()))
+    spn = f'{abs(upper_corner[0] - lower_corner[0])},' + \
+          f'{abs(upper_corner[1] - lower_corner[1])}'
+    lon, lat = toponym['Point']['pos'].split()
+    ll = ",".join([lon, lat])
+    return ll, spn
+
+
+def get_users_map(map_type, user_id):
+    db_sess = db_session.create_session()
+    user = db_sess.query(User).get(user_id)
+    if not user:
+        return jsonify({'error': 'Not found'})
+
+    param = dict()
+    param['username'] = user.name
+    param['city_from'] = user.area
+
+    geocoder_api_server = "http://geocode-maps.yandex.ru/1.x/"
+    api_key = "40d1649f-0493-4b70-98ba-98533de7710b"
+    geocoder_params = {"apikey": api_key, "geocode": user.area, "format": "json"}
+    response = get(geocoder_api_server, params=geocoder_params)
+
+    if not response:
+        print("Ошибка выполнения запроса:")
+        print(response.url)
+        print("Http статус:", response.status_code, "(", response.reason, ")")
+        param['url_img'] = url_for('static', filename='img/not_found_error.jpg')
+        return param
+
+    json_response = response.json()
+    toponym = json_response["response"]["GeoObjectCollection"]["featureMember"]
+
+    if not toponym:
+        print('Not found')
+        param['url_img'] = url_for('static', filename='img/not_found_error.jpg')
+        return param
+
+    ll, spn = get_ll_spn(toponym[0]["GeoObject"])
+    map_api_server = "http://static-maps.yandex.ru/1.x/"
+    map_params = {"ll": ll, "l": map_type, "spn": spn}
+    response = get(map_api_server, params=map_params)
+    param['url_img'] = response.url
+
+    return param
 
 
 def init_category_table():
@@ -510,15 +566,14 @@ def main():
     app.jinja_env.globals.update(
         get_notifies_num=get_notifies_num)
 
-    app.register_blueprint(map_user_api.blueprint)
     generate_routes()
     
     # Для heroku
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    # port = int(os.environ.get("PORT", 5000))
+    # app.run(host='0.0.0.0', port=port)
 
     # Для локального тестирования
-    # app.run(port=8000, host='127.0.0.1')
+    app.run(port=8080, host='127.0.0.1')
 
 
 if __name__ == '__main__':

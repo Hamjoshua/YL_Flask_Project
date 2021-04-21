@@ -4,7 +4,12 @@
     <div style="margin: 10%;margin-top: 1%;padding: 20px;font-size: 14px;background-color: #F7F8FA;border: 1px solid #DBDCDD;border-radius: 0 0 6px 6px;">
         <ul class="list-group">
             <li class="list-group-item">
-                <h2 style="text-align: center;">Тема: {{ topic.title }}</h2>
+                <h2 style="text-align: center;">
+                    Тема: {{ topic.title }}
+                    {% if topic.is_changed %}
+                    <span style="color: #6f7985;">(ред.)</span>
+                    {% endif %}
+                </h2>
             </li>
             <li class="list-group-item">
                 <div style="font-size: 17px;line-height: 24px;font-weight: 400;font-family: Helvetica,Arial,sans-serif;color: #333;word-break: break-word;">
@@ -25,7 +30,9 @@
                 {{ topic.text }}
             </div>
             </li>
+            {% if (current_user.is_authenticated and (current_user.id == topic.user.id)) or topic.img %}
             <li class="list-group-item">
+                {% if topic.img %}
                 <div>
                     <div class="accordion" id="accordionFlushExample">
                         <div class="accordion-item">
@@ -49,12 +56,13 @@
                         </div>
                     </div>
                 </div><br>
+                {% endif %}
                 {% if current_user.is_authenticated and (current_user.id == topic.user.id) %}
                 <a href="/topic_edit/{{ topic.id }}" type="button" class="btn btn-outline-success">Изменить</a>
                 <a href="/topic_delete/{{ topic.id }}" type="button" class="btn btn-outline-danger">Удалить</a>
                 {% endif %}
             </li>
-
+            {% endif %}
         </ul><br>
         <ul class="list-group">
             <li class="list-group-item">
@@ -81,6 +89,9 @@
                     </div>
                 </div>
                 {{ message.message }}
+                {% if message.is_changed %}
+                <span style="color: #6f7985;"> (ред.)</span>
+                {% endif %}
             </li>
             {% endfor %}
         </ul><br>
