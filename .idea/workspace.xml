@@ -3,14 +3,23 @@
   <component name="ChangeListManager">
     <list default="true" id="46094b63-d38f-4935-801f-4c36d4f600cd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/map_user_api.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/message.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/message.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/topic.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/topic.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/forum.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/forum.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forms/mapform.py" beforeDir="false" afterPath="$PROJECT_DIR$/forms/mapform.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forms/topicform.py" beforeDir="false" afterPath="$PROJECT_DIR$/forms/topicform.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forms/userform.py" beforeDir="false" afterPath="$PROJECT_DIR$/forms/userform.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/categories.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/categories.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/message_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/message_edit.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/one_topic.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/one_topic.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/show_user_area.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/show_user_area.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/question.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/question.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/topic_add.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/topic_add.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/topic_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/topic_edit.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/topics.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/topics.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_profile.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,12 +53,12 @@
     <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\User\Documents\GitHub\YL_Flask_Project" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\User\Documents\GitHub\YL_Flask_Project" />
       <recent name="C:\Users\User\Documents\GitHub\YL_Flask_Project\forms" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\User\Documents\GitHub\YL_Flask_Project" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
@@ -186,30 +195,30 @@
       <screen x="1366" y="-165" width="1920" height="1040" />
     </state>
     <state x="2082" y="157" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616415272234" />
-    <state x="2106" y="110" key="FileChooserDialogImpl" timestamp="1619006559092">
+    <state x="2106" y="110" key="FileChooserDialogImpl" timestamp="1619011483617">
       <screen x="1366" y="-165" width="1920" height="1040" />
     </state>
-    <state x="2106" y="110" key="FileChooserDialogImpl/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619006559092" />
-    <state width="1226" height="283" key="GridCell.Tab.0.bottom" timestamp="1619011001925">
-      <screen x="1366" y="-165" width="1920" height="1040" />
+    <state x="2106" y="110" key="FileChooserDialogImpl/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619011483617" />
+    <state width="866" height="116" key="GridCell.Tab.0.bottom" timestamp="1619091590149">
+      <screen x="0" y="0" width="1366" height="722" />
     </state>
-    <state width="1345" height="172" key="GridCell.Tab.0.bottom/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1616431240981" />
-    <state width="1226" height="283" key="GridCell.Tab.0.bottom/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619011001925" />
-    <state width="1226" height="283" key="GridCell.Tab.0.center" timestamp="1619011001925">
-      <screen x="1366" y="-165" width="1920" height="1040" />
+    <state width="866" height="116" key="GridCell.Tab.0.bottom/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1619091590149" />
+    <state width="1223" height="283" key="GridCell.Tab.0.bottom/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619088189990" />
+    <state width="866" height="116" key="GridCell.Tab.0.center" timestamp="1619091590149">
+      <screen x="0" y="0" width="1366" height="722" />
     </state>
-    <state width="1345" height="172" key="GridCell.Tab.0.center/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1616431240981" />
-    <state width="1226" height="283" key="GridCell.Tab.0.center/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619011001925" />
-    <state width="1226" height="283" key="GridCell.Tab.0.left" timestamp="1619011001925">
-      <screen x="1366" y="-165" width="1920" height="1040" />
+    <state width="866" height="116" key="GridCell.Tab.0.center/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1619091590149" />
+    <state width="1223" height="283" key="GridCell.Tab.0.center/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619088189990" />
+    <state width="866" height="116" key="GridCell.Tab.0.left" timestamp="1619091590148">
+      <screen x="0" y="0" width="1366" height="722" />
     </state>
-    <state width="1345" height="172" key="GridCell.Tab.0.left/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1616431240981" />
-    <state width="1226" height="283" key="GridCell.Tab.0.left/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619011001924" />
-    <state width="1226" height="283" key="GridCell.Tab.0.right" timestamp="1619011001925">
-      <screen x="1366" y="-165" width="1920" height="1040" />
+    <state width="866" height="116" key="GridCell.Tab.0.left/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1619091590148" />
+    <state width="1223" height="283" key="GridCell.Tab.0.left/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619088189990" />
+    <state width="866" height="116" key="GridCell.Tab.0.right" timestamp="1619091590149">
+      <screen x="0" y="0" width="1366" height="722" />
     </state>
-    <state width="1345" height="172" key="GridCell.Tab.0.right/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1616431240981" />
-    <state width="1226" height="283" key="GridCell.Tab.0.right/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619011001925" />
+    <state width="866" height="116" key="GridCell.Tab.0.right/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1619091590149" />
+    <state width="1223" height="283" key="GridCell.Tab.0.right/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619088189990" />
     <state width="1899" height="346" key="GridCell.Tab.1.bottom" timestamp="1616571696331">
       <screen x="1366" y="-165" width="1920" height="1040" />
     </state>
@@ -230,10 +239,10 @@
     </state>
     <state width="1345" height="220" key="GridCell.Tab.1.right/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1616431132732" />
     <state width="1899" height="346" key="GridCell.Tab.1.right/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616571696331" />
-    <state x="1989" y="60" width="672" height="678" key="search.everywhere.popup" timestamp="1616568545276">
-      <screen x="1366" y="-165" width="1920" height="1040" />
+    <state x="443" y="156" width="672" height="471" key="search.everywhere.popup" timestamp="1619089995942">
+      <screen x="0" y="0" width="1366" height="722" />
     </state>
-    <state x="443" y="156" width="479" height="471" key="search.everywhere.popup/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1616411966127" />
+    <state x="443" y="156" width="672" height="471" key="search.everywhere.popup/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1619089995942" />
     <state x="1989" y="60" width="672" height="678" key="search.everywhere.popup/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616568545276" />
   </component>
 </project>

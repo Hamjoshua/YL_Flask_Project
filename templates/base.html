@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
             crossorigin="anonymous"></script>
+    <style>body { background-color: #f0f0f0; }</style>
     <link rel="shortcut icon" href='https://www.iconfinder.com/static/img/favicons/favicon-96x96.png?ea0174d544'>
     <title>{{ title }}</title>
 </head>
@@ -67,10 +68,14 @@
                     </a></li>
                     {% endfor %}
                     <li>
-                        <a class="btn btn-outline-danger btn-sm" href="{{ url_for('clear_notifies') }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="После очистки нужно обновить страницу" style="text-align: center;">очистить уведомления({{ get_notifies_num() }})</a>
+                        <a class="btn btn-outline-danger btn-sm" href="{{ url_for('clear_notifies') }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="После очистки вы будете перенаправлены на главную страницу" style="text-align: center; margin-left: 2.4%; width: 95.4%;">очистить уведомления ({{ get_notifies_num() }})</a>
                     </li>
                     {% else %}
-                      <li>Нет уведомлений</li>
+                    <li>
+                        <center>
+                            Нет уведомлений
+                        </center>
+                    </li>
                     {% endif %}
                   </ul>
                   <button type="button" class="btn btn-outline-warning dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">

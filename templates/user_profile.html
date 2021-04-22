@@ -1,13 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div style="margin: 10%;margin-top: 1%;padding: 20px;font-size: 14px;background-color: #F7F8FA;border: 1px solid #DBDCDD;border-radius: 0 0 6px 6px;">
+<div style="margin: 10%;margin-top: 1%;padding: 20px;font-size: 14px;background-color: #fff;border: 1px solid #e0e0e0;border-radius: 6px 6px 6px 6px;">
     <h2 style="text-align: center;">Профиль:</h2>
     <ul class="list-group">
         <li class="list-group-item">
             <div style="font-size: 17px;line-height: 24px;font-weight: 400;font-family: Helvetica,Arial,sans-serif;color: #333;word-break: break-word;">
                 {% if user.profile_img %}
-                <img src="/{{ user.profile_img }}" width="300" height="300" style="border-radius: 500px;display: block;margin-left: auto;margin-right: auto;">
+                <img src="/{{ user.profile_img }}" width="auto" height="auto" style="border-radius: 20px;display: block;margin-left: auto;margin-right: auto; max-width: 100%; max-height: 600px;">
+                {% if current_user.is_authenticated and (current_user.id == user.id) %}
+                <center>
+                    <a type="button" style="margin-top: 1%;" class="btn btn-outline-secondary btn-sm" href="/delete_profile_img/{{ current_user.id }}">
+                        Удалить фото
+                    </a>
+                </center>
+                {% endif %}
                 {% else %}
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxmwWDfc034Ea1LFCRRg__dQtvJQBpkRAKgA&usqp=CAU" width="300" height="300" style="border-radius: 500px;display: block;margin-left: auto;margin-right: auto;">
                 {% endif %}
@@ -21,17 +28,19 @@
             <h7 style="color:#2a5885;">{{ user.about }}</h7>
         </li>
         <li class="list-group-item">
-            <h5>Area:</h5>
-            <div>
-                <h7 style="color:#2a5885;"><a data-bs-target="#exampleModal">{{ user.area }}</a></h7>
-                <a class="btn btn-primary btn-sm" href="/show_map/{{ user.id }}">
+            <h5>
+                Area:
+                <a class="btn btn-primary btn-sm" href="/show_map/{{ user.id }}" style="">
                   Show on map
                 </a>
+            </h5>
+            <div>
+                <h7 style="color:#2a5885;"><a data-bs-target="#exampleModal">{{ user.area }}</a></h7>
             </div>
         </li>
     </ul>
     {% if current_user.is_authenticated and (current_user.id == user.id) %}
-    <a class="btn btn-outline-success" href="/edit_profile/{{ current_user.id }}" style="width:100%;">
+    <a class="btn btn-outline-success" href="/edit_profile/{{ current_user.id }}" style="width:100%; margin-top: 2%;">
         Изменить профиль
     </a>
     {% endif %}

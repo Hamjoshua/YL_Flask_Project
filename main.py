@@ -136,7 +136,7 @@ def login():
             User.email == form.email.data).first()
 
         if user and user.check_password(form.password.data):
-            login_user(user, remember=form.remember_me.data)  # значение галочки
+            login_user(user, remember=form.remember_me.data)
             return redirect("/")
 
         return render_template(
@@ -172,15 +172,12 @@ def edit_profile(user_id):
                 'user_edit.html', form=form, user=user)
         else:
 
-            if form.edit_img.data:
-                added_img = form.profile_img.data
-                if added_img:
-                    f = added_img
-                    filename = f'{PROFILE_IMG_DIR}/{f.filename}'
-                    f.save(filename)
-                    user.profile_img = filename
-                else:
-                    user.profile_img = ''
+            added_img = form.profile_img.data
+            if added_img:
+                f = added_img
+                filename = f'{PROFILE_IMG_DIR}/{f.filename}'
+                f.save(filename)
+                user.profile_img = filename
 
             user.area = form.area.data
             user.about = form.about.data
@@ -191,13 +188,26 @@ def edit_profile(user_id):
         return redirect('/')
 
 
+@app.route('/delete_profile_img/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def delete_profile_img(user_id):
+    db_sess = db_session.create_session()
+    user = db_sess.query(User).filter(
+        User.id == user_id).first()
+    if user:
+        user.profile_img = ''
+        db_sess.commit()
+        return redirect(
+            f'/profile/{user.id}')
+    else:
+        abort(404)
+
+
 @app.route('/show_map/<int:user_id>', methods=['GET', 'POST'])
 def show_map(user_id):
     form = MapForm()
     map_type_data = form.map_type.data
-    map_type = map_type_data \
-        if len(map_type_data) == 3 else 'map'
-    param = get_users_map(map_type, user_id)
+    param = get_users_map(map_type_data, user_id)
     return render_template(
         'show_user_area.html', **param,
         form=form)
@@ -354,27 +364,39 @@ def edit_topics(topic_id):
                 topic.title = form.title.data
                 topic.text = form.text.data
 
-                if form.edit_img.data:
-                    added_img = form.img.data
-                    if added_img:
-                        f = added_img
-                        filename = f'{TOPIC_IMG_DIR}/{f.filename}'
-                        f.save(filename)
-                        topic.img = filename
-                    else:
-                        topic.img = ''
+                added_img = form.img.data
+                if added_img:
+                    f = added_img
+                    filename = f'{TOPIC_IMG_DIR}/{f.filename}'
+                    f.save(filename)
+                    topic.img = filename
 
                 topic.category_id = \
                     form.category.data
                 topic.is_changed = True
                 db_sess.add(topic)
                 db_sess.commit()
-                return redirect('/topics/0')
+                return redirect(f'/topic/{topic.id}')
             else:
                 abort(404)
         return render_template('topic_edit.html', form=form)
 
     return redirect('/')
+
+
+@app.route('/delete_topic_img/<int:topic_id>', methods=['GET', 'POST'])
+@login_required
+def delete_topic_img(topic_id):
+    db_sess = db_session.create_session()
+    topic = db_sess.query(Topic).filter(
+        Topic.id == topic_id).first()
+    if topic:
+        topic.img = ''
+        db_sess.commit()
+        return redirect(
+            f'/topic/{topic_id}')
+    else:
+        abort(404)
 
 
 @app.route('/topic_delete/<int:topic_id>', methods=['GET', 'POST'])

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div style="margin: 10%;margin-top: 1%;padding: 20px;font-size: 14px;background-color: #F7F8FA;border: 1px solid #DBDCDD;border-radius: 0 0 6px 6px;">
+    <div style="margin: 10%;margin-top: 1%;padding: 20px;font-size: 14px;background-color: #fff;border: 1px solid #e0e0e0;border-radius: 0 0 6px 6px;">
         <ul class="list-group">
             <li class="list-group-item">
                 <h2 style="text-align: center;">
@@ -48,6 +48,13 @@
                                         <div class="carousel-inner">
                                             <div class="carousel-item active">
                                                 <img src="/{{ topic.img }}" class="d-block w-100" alt="Пользователь не прикрепил картинку к теме :(" width="500" style="border-radius: 50px;display: block;margin-left: auto;margin-right: auto;">
+                                                {% if current_user.is_authenticated and (current_user.id == topic.author_id) %}
+                                                <center>
+                                                    <a type="button" style="margin-top: 1%; width: auto;" class="btn btn-outline-secondary btn-sm" href="/delete_topic_img/{{ topic.id }}">
+                                                        Удалить фото
+                                                    </a>
+                                                </center>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -58,8 +65,8 @@
                 </div><br>
                 {% endif %}
                 {% if current_user.is_authenticated and (current_user.id == topic.user.id) %}
-                <a href="/topic_edit/{{ topic.id }}" type="button" class="btn btn-outline-success">Изменить</a>
-                <a href="/topic_delete/{{ topic.id }}" type="button" class="btn btn-outline-danger">Удалить</a>
+                <a style="width: 100%;" href="/topic_edit/{{ topic.id }}" type="button" class="btn btn-outline-success">Изменить тему</a><br>
+                <a style="width: 100%; margin-top: 0.5%;" href="/topic_delete/{{ topic.id }}" type="button" class="btn btn-outline-danger">Удалить тему</a>
                 {% endif %}
             </li>
             {% endif %}
@@ -82,8 +89,8 @@
                          - {{ message.time }}
 
                         {% if current_user.is_authenticated and (current_user.id == messages_authors_dict[message].id) %}
-                            <a href="/message_edit/{{ message.id }}" type="button" class="btn btn-outline-success btn-sm">Изменить</a>
-                            <a href="/message_delete/{{ message.id }}" type="button" class="btn btn-outline-danger btn-sm">Удалить</a>
+                            <a style="float: right; margin-left: 0.6%;" href="/message_edit/{{ message.id }}" type="button" class="btn btn-outline-success btn-sm">Изменить</a>
+                            <a style="float: right;" href="/message_delete/{{ message.id }}" type="button" class="btn btn-outline-danger btn-sm">Удалить</a>
                         {% endif %}
 
                     </div>
