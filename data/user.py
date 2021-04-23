@@ -22,6 +22,7 @@ class User(SqlAlchemyBase, UserMixin, SerializerMixin):
     about = sqlalchemy.Column(sqlalchemy.String)
     area = sqlalchemy.Column(sqlalchemy.String)
     profile_img = sqlalchemy.Column(sqlalchemy.String)
+    apikey = sqlalchemy.Column(sqlalchemy.String, unique=True)
 
     role = orm.relation('Role')
     notifies = orm.relation('Notify', back_populates='user', lazy='subquery')

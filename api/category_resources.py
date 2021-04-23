@@ -1,9 +1,11 @@
-from flask import abort, jsonify
+from flask import jsonify
 from flask_restful import abort, Resource
 
 from data import db_session
 from api.category_reqparser import *
 from data.__all_models import *
+
+from . check_api import check_api
 
 
 def abort_if_categories_not_found(categories_id):
@@ -14,6 +16,7 @@ def abort_if_categories_not_found(categories_id):
 
 
 class CategoryResource(Resource):
+    @check_api
     def get(self, categories_id):
         abort_if_categories_not_found(categories_id)
         session = db_session.create_session()
@@ -22,6 +25,7 @@ class CategoryResource(Resource):
             'categories': categories.to_dict(
                 only=('id', 'title'))})
 
+    @check_api
     def delete(self, categories_id):
         abort_if_categories_not_found(categories_id)
         session = db_session.create_session()
@@ -30,6 +34,7 @@ class CategoryResource(Resource):
         session.commit()
         return jsonify({'success': 'OK'})
 
+    @check_api
     def put(self, categories_id):
         abort_if_categories_not_found(categories_id)
         session = db_session.create_session()
@@ -44,6 +49,7 @@ class CategoryResource(Resource):
 
 
 class CategoryListResource(Resource):
+    @check_api
     def get(self):
         session = db_session.create_session()
         categories = session.query(Category).all()
@@ -52,6 +58,7 @@ class CategoryListResource(Resource):
                 only=('id', 'title'))
                 for item in categories]})
 
+    @check_api
     def post(self):
         args = parser.parse_args()
         session = db_session.create_session()

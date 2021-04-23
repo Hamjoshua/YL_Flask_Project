@@ -1,4 +1,5 @@
 import os
+from binascii import hexlify
 import datetime
 from csv import reader
 from requests import get
@@ -44,6 +45,19 @@ api = Api(app)
 def get_topics():
     db_sess = db_session.create_session()
     return db_sess.query(Topic).all()
+
+
+def generate_new_apikey():
+    db_sess = db_session.create_session()
+    is_unique = False
+    user = db_sess.query(User).get(current_user.id)
+    while not is_unique:
+        key = hexlify(os.urandom(4)).decode('utf-8').upper()
+        if not db_sess.query(User).filter(User.apikey == key).first():
+            is_unique = True
+    user.apikey = key
+    db_sess.add(user)
+    db_sess.commit()
 
 
 @login_manager.user_loader
@@ -155,6 +169,17 @@ def profile(user_id):
         User.id == user_id).first()
     return render_template(
         'user_profile.html', title='Профиль:', user=user)
+
+
+@app.route('/profile/generate_apikey')
+def new_profile_apikey():
+    if current_user.apikey:
+        return redirect(f'/profile/{current_user.id}')
+    print(current_user.role_id)
+    if current_user.role_id not in (2, 4):
+        abort(403)
+    generate_new_apikey()
+    return redirect(f'profile/{current_user.id}')
 
 
 @app.route('/edit_profile/<int:user_id>', methods=['GET', 'POST'])
@@ -567,10 +592,10 @@ def init_role_table():
             
             
 def generate_routes():
-    api.add_resource(message_resources.MessageResource, '/api/messages/<int:messages_id>')
+    api.add_resource(message_resources.MessageResource, '/api/messages/<int:message_id>')
     api.add_resource(message_resources.MessageListResource, '/api/messages')
 
-    api.add_resource(category_resources.CategoryResource, '/api/categories/<int:subtopics_id>')
+    api.add_resource(category_resources.CategoryResource, '/api/categories/<int:categories_id>')
     api.add_resource(category_resources.CategoryListResource, '/api/categories')
 
     api.add_resource(topic_resources.TopicResource, '/api/topics/<int:topics_id>')

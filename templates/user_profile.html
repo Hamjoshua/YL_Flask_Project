@@ -38,6 +38,24 @@
                 <h7 style="color:#2a5885;"><a data-bs-target="#exampleModal">{{ user.area }}</a></h7>
             </div>
         </li>
+        {% if current_user.is_authenticated and (current_user.id == user.id) and user.role_id in (2, 4) %}
+        <li class="list-group-item">
+            <h5>Apikey:</h5>
+            {% if user.apikey %}
+            <h7 style="color:#ff6a00;">
+                {{ user.apikey }}
+            </h7>
+            {% else %}
+            <a class="btn btn-outline-warning" href="/profile/generate_apikey" style="width:100%; margin-top: 2%;">
+                Сгенерировать APIKEY
+            </a>
+            <h7>
+                Если вы модератор или администратор нашего сайта и вы хотите управлять нашим сайтом
+                через Api, то советуем вам сгенерировать новый Apikey.
+            </h7>
+            {% endif %}
+        </li>
+        {% endif %}
     </ul>
     {% if current_user.is_authenticated and (current_user.id == user.id) %}
     <a class="btn btn-outline-success" href="/edit_profile/{{ current_user.id }}" style="width:100%; margin-top: 2%;">

@@ -5,6 +5,8 @@ from data import db_session
 from api.message_reqparser import *
 from data.__all_models import *
 
+from . check_api import check_api
+
 
 def abort_if_message_not_found(message_id):
     session = db_session.create_session()
@@ -14,15 +16,17 @@ def abort_if_message_not_found(message_id):
 
 
 class MessageResource(Resource):
+    @check_api
     def get(self, message_id):
         abort_if_message_not_found(message_id)
         session = db_session.create_session()
         message = session.query(Message).get(message_id)
         return jsonify({
             'message': message.to_dict(
-                only=('message', 'topic_id',
+                only=('id', 'message', 'topic_id',
                       'author_id', 'time'))})
 
+    @check_api
     def delete(self, message_id):
         abort_if_message_not_found(message_id)
         session = db_session.create_session()
@@ -31,6 +35,7 @@ class MessageResource(Resource):
         session.commit()
         return jsonify({'success': 'OK'})
 
+    @check_api
     def put(self, message_id):
         abort_if_message_not_found(message_id)
         session = db_session.create_session()
@@ -49,15 +54,17 @@ class MessageResource(Resource):
 
 
 class MessageListResource(Resource):
+    @check_api
     def get(self):
         session = db_session.create_session()
         message = session.query(Message).all()
         return jsonify({
             'message': [item.to_dict(
-                only=('message', 'topic_id',
+                only=('id', 'message', 'topic_id',
                       'author_id', 'time'))
                 for item in message]})
 
+    @check_api
     def post(self):
         args = parser.parse_args()
         session = db_session.create_session()

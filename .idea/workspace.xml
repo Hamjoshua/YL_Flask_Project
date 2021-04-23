@@ -1,25 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:feature" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="46094b63-d38f-4935-801f-4c36d4f600cd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/api/check_api.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/localhost/category_tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/albemic.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alembic/env.py" beforeDir="false" afterPath="$PROJECT_DIR$/alembic/env.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/category_resources.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/category_resources.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/message_resources.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/message_resources.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/topic_resources.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/topic_resources.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/user_reqparser.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/user_reqparser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/user_resources.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/user_resources.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/user.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/forum.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/forum.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forms/mapform.py" beforeDir="false" afterPath="$PROJECT_DIR$/forms/mapform.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forms/topicform.py" beforeDir="false" afterPath="$PROJECT_DIR$/forms/topicform.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forms/userform.py" beforeDir="false" afterPath="$PROJECT_DIR$/forms/userform.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/categories.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/categories.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/message_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/message_edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/one_topic.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/one_topic.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/question.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/question.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/topic_add.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/topic_add.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/topic_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/topic_edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/topics.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/topics.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_edit.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/user_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/category_tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/message_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/localhost/message_tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/topic_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/localhost/topic_tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/user_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/localhost/user_tests.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,16 +73,17 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../PyCharm2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/tests/localhost/user_tests.py" />
     <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Admin\Desktop\PyPaint-main\YL_Flask_Project\tests\remotehost_test" />
+      <recent name="C:\Users\User\Documents\GitHub\YL_Flask_Project" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\User\Documents\GitHub\YL_Flask_Project" />
       <recent name="C:\Users\User\Documents\GitHub\YL_Flask_Project\forms" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\User\Documents\GitHub\YL_Flask_Project" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
@@ -125,27 +150,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="messageform" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="YL_Flask_Project" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/forms" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/forms/messageform.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="topic_tests" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="YL_Flask_Project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -158,7 +162,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/topic_tests.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\Admin\Desktop\PyPaint-main\YL_Flask_Project\tests\remotehost_test\topic_tests.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -167,16 +171,45 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="user_tests" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="YL_Flask_Project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/localhost" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/localhost/user_tests.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.user_tests" />
+      <item itemvalue="Python.loginform" />
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.map_user_api" />
+      <item itemvalue="Python.topic_tests" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.user_tests" />
         <item itemvalue="Python.topic_tests" />
         <item itemvalue="Python.map_user_api" />
         <item itemvalue="Python.loginform" />
-        <item itemvalue="Python.messageform" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -190,33 +223,58 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="WindowStateProjectService">
+    <state x="94" y="147" width="1092" height="738" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1619176323466">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="94" y="147" width="1092" height="738" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.984@0.0.1280.984" timestamp="1619176323466" />
     <state x="2082" y="157" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1616415272234">
       <screen x="1366" y="-165" width="1920" height="1040" />
     </state>
     <state x="2082" y="157" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616415272234" />
-    <state x="2106" y="110" key="FileChooserDialogImpl" timestamp="1619011483617">
-      <screen x="1366" y="-165" width="1920" height="1040" />
+    <state x="370" y="239" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1619096954908">
+      <screen x="0" y="0" width="1280" height="984" />
     </state>
+    <state x="370" y="239" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.984@0.0.1280.984" timestamp="1619096954908" />
+    <state x="493" y="260" key="FileChooserDialogImpl" timestamp="1619176321857">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="493" y="260" key="FileChooserDialogImpl/0.0.1280.984@0.0.1280.984" timestamp="1619176321857" />
     <state x="2106" y="110" key="FileChooserDialogImpl/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619011483617" />
-    <state width="866" height="116" key="GridCell.Tab.0.bottom" timestamp="1619091590149">
-      <screen x="0" y="0" width="1366" height="722" />
+    <state width="629" height="263" key="GridCell.Tab.0.bottom" timestamp="1619176595910">
+      <screen x="0" y="0" width="1280" height="984" />
     </state>
+    <state width="629" height="263" key="GridCell.Tab.0.bottom/0.0.1280.984@0.0.1280.984" timestamp="1619176595910" />
     <state width="866" height="116" key="GridCell.Tab.0.bottom/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1619091590149" />
     <state width="1223" height="283" key="GridCell.Tab.0.bottom/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619088189990" />
-    <state width="866" height="116" key="GridCell.Tab.0.center" timestamp="1619091590149">
-      <screen x="0" y="0" width="1366" height="722" />
+    <state width="629" height="263" key="GridCell.Tab.0.center" timestamp="1619176595910">
+      <screen x="0" y="0" width="1280" height="984" />
     </state>
+    <state width="629" height="263" key="GridCell.Tab.0.center/0.0.1280.984@0.0.1280.984" timestamp="1619176595910" />
     <state width="866" height="116" key="GridCell.Tab.0.center/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1619091590149" />
     <state width="1223" height="283" key="GridCell.Tab.0.center/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619088189990" />
-    <state width="866" height="116" key="GridCell.Tab.0.left" timestamp="1619091590148">
-      <screen x="0" y="0" width="1366" height="722" />
+    <state width="629" height="263" key="GridCell.Tab.0.left" timestamp="1619176595910">
+      <screen x="0" y="0" width="1280" height="984" />
     </state>
+    <state width="629" height="263" key="GridCell.Tab.0.left/0.0.1280.984@0.0.1280.984" timestamp="1619176595910" />
     <state width="866" height="116" key="GridCell.Tab.0.left/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1619091590148" />
     <state width="1223" height="283" key="GridCell.Tab.0.left/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619088189990" />
-    <state width="866" height="116" key="GridCell.Tab.0.right" timestamp="1619091590149">
-      <screen x="0" y="0" width="1366" height="722" />
+    <state width="629" height="263" key="GridCell.Tab.0.right" timestamp="1619176595910">
+      <screen x="0" y="0" width="1280" height="984" />
     </state>
+    <state width="629" height="263" key="GridCell.Tab.0.right/0.0.1280.984@0.0.1280.984" timestamp="1619176595910" />
     <state width="866" height="116" key="GridCell.Tab.0.right/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1619091590149" />
     <state width="1223" height="283" key="GridCell.Tab.0.right/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1619088189990" />
     <state width="1899" height="346" key="GridCell.Tab.1.bottom" timestamp="1616571696331">
@@ -239,9 +297,10 @@
     </state>
     <state width="1345" height="220" key="GridCell.Tab.1.right/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1616431132732" />
     <state width="1899" height="346" key="GridCell.Tab.1.right/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616571696331" />
-    <state x="443" y="156" width="672" height="471" key="search.everywhere.popup" timestamp="1619089995942">
-      <screen x="0" y="0" width="1366" height="722" />
+    <state x="415" y="213" width="672" height="642" key="search.everywhere.popup" timestamp="1619174415863">
+      <screen x="0" y="0" width="1280" height="984" />
     </state>
+    <state x="415" y="213" width="672" height="642" key="search.everywhere.popup/0.0.1280.984@0.0.1280.984" timestamp="1619174415863" />
     <state x="443" y="156" width="672" height="471" key="search.everywhere.popup/0.0.1366.722/1366.-165.1920.1040@0.0.1366.722" timestamp="1619089995942" />
     <state x="1989" y="60" width="672" height="678" key="search.everywhere.popup/0.0.1366.722/1366.-165.1920.1040@1366.-165.1920.1040" timestamp="1616568545276" />
   </component>

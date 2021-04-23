@@ -5,15 +5,18 @@ from data import db_session
 from api.topic_reqparser import *
 from data.__all_models import *
 
+from . check_api import check_api
+
 
 def abort_if_topics_not_found(topics_id):
     session = db_session.create_session()
     topics = session.query(Topic).get(topics_id)
     if not topics:
-        abort(404, message=f"topic {topics_id} not found")
+        abort(404, message=f"Topic {topics_id} not found")
 
 
 class TopicResource(Resource):
+    @check_api
     def get(self, topics_id):
         abort_if_topics_not_found(topics_id)
         session = db_session.create_session()
@@ -24,6 +27,7 @@ class TopicResource(Resource):
                       'img', 'date', 'category_id',
                       'author_id'))})
 
+    @check_api
     def delete(self, topics_id):
         abort_if_topics_not_found(topics_id)
         session = db_session.create_session()
@@ -32,6 +36,7 @@ class TopicResource(Resource):
         session.commit()
         return jsonify({'success': 'OK'})
 
+    @check_api
     def put(self, topics_id):
         abort_if_topics_not_found(topics_id)
         session = db_session.create_session()
@@ -52,6 +57,7 @@ class TopicResource(Resource):
 
 
 class TopicListResource(Resource):
+    @check_api
     def get(self):
         session = db_session.create_session()
         topics = session.query(Topic).all()
@@ -62,6 +68,7 @@ class TopicListResource(Resource):
                       'author_id'))
                 for item in topics]})
 
+    @check_api
     def post(self):
         args = parser.parse_args()
         session = db_session.create_session()

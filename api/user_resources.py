@@ -5,6 +5,8 @@ from data import db_session
 from api.user_reqparser import *
 from data.__all_models import *
 
+from . check_api import check_api
+
 
 def abort_if_users_not_found(users_id):
     session = db_session.create_session()
@@ -14,16 +16,17 @@ def abort_if_users_not_found(users_id):
 
 
 class UserResource(Resource):
+    @check_api
     def get(self, users_id):
         abort_if_users_not_found(users_id)
         session = db_session.create_session()
         users = session.query(User).get(users_id)
         return jsonify({
             'users': users.to_dict(
-                only=('name', 'email', 'password',
-                      'role_id', 'about', 'area',
-                      'profile_img'))})
+                only=('id', 'name', 'email', 'role_id', 'about', 'area',
+                      'profile_img', 'apikey'))})
 
+    @check_api
     def delete(self, users_id):
         abort_if_users_not_found(users_id)
         session = db_session.create_session()
@@ -32,11 +35,12 @@ class UserResource(Resource):
         session.commit()
         return jsonify({'success': 'OK'})
 
-    def put(self, categories_id):
-        abort_if_users_not_found(categories_id)
+    @check_api
+    def put(self, users_id):
+        abort_if_users_not_found(users_id)
         session = db_session.create_session()
         args = parser.parse_args()
-        user = session.query(Category).get(categories_id)
+        user = session.query(User).get(users_id)
 
         if args['name']:
             user.name = args['name']
@@ -56,16 +60,17 @@ class UserResource(Resource):
 
 
 class UserListResource(Resource):
+    @check_api
     def get(self):
         session = db_session.create_session()
         users = session.query(User).all()
         return jsonify({
             'users': [item.to_dict(
-                only=('name', 'email', 'password',
-                      'role_id', 'about', 'area',
-                      'profile_img'))
+                only=('id', 'name', 'email', 'role_id', 'about', 'area',
+                      'profile_img', 'apikey'))
                 for item in users]})
 
+    @check_api
     def post(self):
         args = parser.parse_args()
         session = db_session.create_session()
@@ -74,6 +79,9 @@ class UserListResource(Resource):
         users.name = args['name']
         users.set_password(args['password'])
         users.email = args['email']
+        users.role_id = args['role_id']
+        users.area = args['area']
+        users.about = args['about']
 
         session.add(users)
         session.commit()

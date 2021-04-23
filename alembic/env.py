@@ -1,3 +1,11 @@
+import sys
+import os
+path = os.path.join('C', 'Users', 'Admin', 'Desktop', 'PyPaint-main', 'YL_Flask_Project')
+sys.path.insert(0, r'C:\Users\Admin\Desktop\PyPaint-main\YL_Flask_Project')
+
+from data.db_session import SqlAlchemyBase
+import data.__all_models
+
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
@@ -17,12 +25,8 @@ fileConfig(config.config_file_name)
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-import sys
 
-sys.path.insert(0, 'E:\Yandex_Lyceum(2 year)\\')
-print(sys.path)
-from Flask_project.data.db_session import SqlAlchemyBase
-import Flask_project.data.__all_models
+# print(sys.path)
 
 target_metadata = SqlAlchemyBase.metadata
 
